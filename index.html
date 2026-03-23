@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansikt — Brand Identity System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =================================================================
+       DESIGN TOKENS
+       ================================================================= */
+    :root {
+      /* Brand palette */
+      --color-plaster: #D4C4B0;
+      --color-linen: #F5F0E8;
+      --color-blush: #DBBFB3;
+      --color-charcoal: #2C2420;
+      --color-terracotta: #B5704F;
+
+      /* Semantic tokens */
+      --color-bg: #F5F0E8;
+      --color-surface: #FFFFFF;
+      --color-surface-warm: #F5F0E8;
+      --color-surface-accent: #DBBFB3;
+      --color-border: #D4C4B0;
+      --color-border-subtle: #E8E0D6;
+      --color-ink-1: #2C2420;
+      --color-ink-2: #5C524A;
+      --color-ink-3: #8C8078;
+      --color-accent: #B5704F;
+      --color-accent-hover: #9A5D3F;
+
+      /* Semantic states */
+      --color-success: #5C8A52;
+      --color-success-tint: #E8F0E4;
+      --color-warning: #C4903A;
+      --color-warning-tint: #FDF3E0;
+      --color-error: #B84C4C;
+      --color-error-tint: #FAEAEA;
+      --color-info: #5A7FA0;
+      --color-info-tint: #E6EEF5;
+
+      /* Font stacks
+         Recoleta: commercial font — swap in via @font-face when files are available.
+         Until then, Georgia serves as the fallback. */
+      --font-display: 'Recoleta', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Courier Prime', 'Courier New', monospace;
+
+      /* Spacing scale */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+
+      /* Sidebar */
+      --sidebar-width: 260px;
+
+      /* Radii */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+    }
+
+    /* =================================================================
+       RESET & BASE
+       ================================================================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--color-bg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-ink-2);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      color: var(--color-ink-1);
+      margin-top: 0;
+    }
+    a { color: var(--color-accent); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--color-accent-hover); }
+    ::selection { background: var(--color-blush); color: var(--color-charcoal); }
+    img { max-width: 100%; height: auto; display: block; }
+    code { font-family: var(--font-mono); font-size: 0.9em; }
+
+    /* =================================================================
+       SIDEBAR
+       ================================================================= */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border-subtle);
+      overflow-y: auto;
+      padding: 32px 24px;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+    .sidebar-logo {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--color-ink-1);
+      margin-bottom: 4px;
+    }
+    .sidebar-version {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-ink-3);
+      margin-bottom: 32px;
+    }
+    .sidebar-group { margin-bottom: 24px; }
+    .sidebar-group-title {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-3);
+      margin-bottom: 12px;
+    }
+    .sidebar-link {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-ink-2);
+      text-decoration: none;
+      padding: 6px 0;
+      transition: color 0.15s;
+    }
+    .sidebar-link:hover { color: var(--color-accent); }
+    .sidebar-link.active { color: var(--color-accent); font-weight: 500; }
+
+    /* =================================================================
+       HAMBURGER (mobile)
+       ================================================================= */
+    .hamburger-btn {
+      display: none;
+      position: fixed;
+      top: 16px; left: 16px;
+      width: 44px; height: 44px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      z-index: 101;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-ink-1);
+    }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44,36,32,0.3);
+      z-index: 99;
+    }
+
+    /* =================================================================
+       MAIN CONTENT
+       ================================================================= */
+    .main {
+      margin-left: var(--sidebar-width);
+      padding: 48px 64px;
+      max-width: calc(860px + var(--sidebar-width));
+    }
+    .section { margin-bottom: var(--space-3xl); }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-ink-3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      line-height: 1.2;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--color-ink-2);
+      margin-bottom: var(--space-xl);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: var(--space-3xl) 0;
+    }
+
+    /* =================================================================
+       UTILITY CLASSES
+       ================================================================= */
+    .grid { display: grid; gap: var(--space-md); }
+    .grid-auto { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* =================================================================
+       RESPONSIVE
+       ================================================================= */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(44,36,32,0.15);
+      }
+      .sidebar-overlay.open { display: block; }
+      .hamburger-btn { display: flex; }
+      .main {
+        margin-left: 0;
+        padding: 72px 20px 24px;
+      }
+      .section-title { font-size: 26px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .main { padding: 72px 16px 24px; }
+      .grid-auto { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hamburger button (mobile) -->
+  <button class="hamburger-btn" id="hamburger" aria-label="Toggle navigation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <!-- Overlay (mobile) -->
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <!-- Sidebar navigation -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">ansikt</div>
+    <div class="sidebar-version">Brand Identity v1.0</div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Introduction</div>
+      <a href="#brand" class="sidebar-link">Brand</a>
+      <a href="#logo" class="sidebar-link">Logo</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Colour</div>
+      <a href="#brand-palette" class="sidebar-link">Brand palette</a>
+      <a href="#semantic-tokens" class="sidebar-link">Semantic tokens</a>
+      <a href="#semantic-states" class="sidebar-link">Semantic states</a>
+      <a href="#accessibility-matrix" class="sidebar-link">Accessibility matrix</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Typography</div>
+      <a href="#font-stack" class="sidebar-link">Font stack</a>
+      <a href="#type-scale" class="sidebar-link">Type scale</a>
+      <a href="#usage-rules" class="sidebar-link">Usage rules</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Combinations</div>
+      <a href="#colour-font-pairings" class="sidebar-link">Colour + font pairings</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Components</div>
+      <a href="#treatment-card" class="sidebar-link">Treatment card</a>
+      <a href="#treatment-menu" class="sidebar-link">Treatment menu</a>
+      <a href="#buttons" class="sidebar-link">Buttons</a>
+      <a href="#callout" class="sidebar-link">Callout / quote</a>
+      <a href="#navigation" class="sidebar-link">Navigation</a>
+      <a href="#tables" class="sidebar-link">Tables</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Imagery</div>
+      <a href="#photography" class="sidebar-link">Photography guidelines</a>
+      <a href="#treatment-imagery" class="sidebar-link">Treatment examples</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Accessibility</div>
+      <a href="#aa-guide" class="sidebar-link">AA compliance guide</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main" id="main-content">
+    <!-- ===============================================================
+         INTRODUCTION
+         =============================================================== -->
+    <section class="section" id="brand">
+      <div class="section-label">Introduction &middot; 01</div>
+      <h2 class="section-title" style="font-size:48px; margin-bottom:4px;">ansikt</h2>
+      <p style="font-family:var(--font-body); font-size:16px; letter-spacing:0.2em; text-transform:lowercase; color:var(--color-ink-3); margin-bottom:32px;">beauty</p>
+      <p class="section-desc" style="max-width:540px;">Ansikt — Norwegian for "face" — is a bespoke brow and facial treatment studio. Every visit is tailored, every space considered. We believe in natural beauty enhanced, not masked; in calm, warm spaces that feel like a pause from the world.</p>
+      <p class="section-desc" style="max-width:540px;">This brand identity system defines the visual language of Ansikt. It provides the colours, typography, components, and guidelines needed to maintain consistency across all touchpoints — from digital to print.</p>
+    </section>
+
+    <section class="section" id="logo">
+      <div class="section-label">Introduction &middot; 02</div>
+      <h2 class="section-title">Logo</h2>
+      <p class="section-desc">The Ansikt logo is a bold display serif wordmark with high stroke contrast, a decorative swash on the lowercase "a", and angular cuts on the "k" and "t".</p>
+
+      <div style="background:var(--color-surface); border:1px solid var(--color-border-subtle); border-radius:var(--radius-xl); padding:48px; text-align:center; margin-bottom:24px;">
+        <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--color-ink-1); letter-spacing:-0.02em;">ansikt</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">Logo shown in display fallback — SVG asset to be supplied</div>
+      </div>
+
+      <div style="background:var(--color-charcoal); border-radius:var(--radius-xl); padding:48px; text-align:center; margin-bottom:32px;">
+        <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--color-linen); letter-spacing:-0.02em;">ansikt</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">Inverted variant on dark backgrounds</div>
+      </div>
+
+      <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:16px;">Usage Rules</h3>
+      <div class="grid grid-2" style="gap:16px; margin-bottom:24px;">
+        <div style="background:var(--color-success-tint); border-radius:var(--radius-lg); padding:20px;">
+          <div style="font-weight:600; color:var(--color-success); font-size:13px; margin-bottom:10px;">DO</div>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:1.8;">
+            <li>Maintain minimum clear space of 1&times; the height of the "a" on all sides</li>
+            <li>Minimum display size: 120px width for digital</li>
+            <li>Use on solid light or solid dark backgrounds only</li>
+            <li>Use the supplied SVG/PNG — do not recreate in a different font</li>
+          </ul>
+        </div>
+        <div style="background:var(--color-error-tint); border-radius:var(--radius-lg); padding:20px;">
+          <div style="font-weight:600; color:var(--color-error); font-size:13px; margin-bottom:10px;">DON'T</div>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:1.8;">
+            <li>Stretch, skew, or rotate the logo</li>
+            <li>Change the logo colours (use only black, white, or brand charcoal/linen)</li>
+            <li>Add drop shadows, outlines, or other effects</li>
+            <li>Place on busy imagery without a solid overlay</li>
+            <li>Display below 120px width on digital, 25mm on print</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         COLOUR
+         =============================================================== -->
+    <section class="section" id="brand-palette">
+      <div class="section-label">Colour &middot; 01</div>
+      <h2 class="section-title">Brand palette</h2>
+      <p class="section-desc">Five core colours derived from the salon interior, flipbook photography, and existing print materials.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px;">
+        <!-- Plaster -->
+        <div class="card">
+          <div style="background:var(--color-plaster); height:100px; display:flex; align-items:flex-end; padding:12px;">
+            <span style="font-size:11px; font-weight:600; color:var(--color-charcoal); letter-spacing:0.05em; text-transform:uppercase;">Plaster</span>
+          </div>
+          <div style="padding:14px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#D4C4B0</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-plaster</code></div>
+            <div style="color:var(--color-ink-3); margin-top:6px;">Borders, rules, warm neutral</div>
+          </div>
+        </div>
+        <!-- Linen -->
+        <div class="card">
+          <div style="background:var(--color-linen); height:100px; display:flex; align-items:flex-end; padding:12px; border-bottom:1px solid var(--color-border-subtle);">
+            <span style="font-size:11px; font-weight:600; color:var(--color-charcoal); letter-spacing:0.05em; text-transform:uppercase;">Linen</span>
+          </div>
+          <div style="padding:14px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#F5F0E8</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-linen</code></div>
+            <div style="color:var(--color-ink-3); margin-top:6px;">Page background</div>
+          </div>
+        </div>
+        <!-- Blush -->
+        <div class="card">
+          <div style="background:var(--color-blush); height:100px; display:flex; align-items:flex-end; padding:12px;">
+            <span style="font-size:11px; font-weight:600; color:var(--color-charcoal); letter-spacing:0.05em; text-transform:uppercase;">Blush</span>
+          </div>
+          <div style="padding:14px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#DBBFB3</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-blush</code></div>
+            <div style="color:var(--color-ink-3); margin-top:6px;">Accent surfaces, callout cards</div>
+          </div>
+        </div>
+        <!-- Charcoal -->
+        <div class="card">
+          <div style="background:var(--color-charcoal); height:100px; display:flex; align-items:flex-end; padding:12px;">
+            <span style="font-size:11px; font-weight:600; color:var(--color-linen); letter-spacing:0.05em; text-transform:uppercase;">Charcoal</span>
+          </div>
+          <div style="padding:14px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#2C2420</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-charcoal</code></div>
+            <div style="color:var(--color-ink-3); margin-top:6px;">Primary text, dark surfaces</div>
+          </div>
+        </div>
+        <!-- Terracotta -->
+        <div class="card">
+          <div style="background:var(--color-terracotta); height:100px; display:flex; align-items:flex-end; padding:12px;">
+            <span style="font-size:11px; font-weight:600; color:var(--color-linen); letter-spacing:0.05em; text-transform:uppercase;">Terracotta</span>
+          </div>
+          <div style="padding:14px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#B5704F</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-terracotta</code></div>
+            <div style="color:var(--color-ink-3); margin-top:6px;">Active accent, links, CTAs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="semantic-tokens">
+      <div class="section-label">Colour &middot; 02</div>
+      <h2 class="section-title">Semantic tokens</h2>
+      <p class="section-desc">CSS custom properties mapping brand colours to functional roles. These are the tokens consumed by components.</p>
+
+      <div style="background:var(--color-surface); border:1px solid var(--color-border-subtle); border-radius:var(--radius-xl); padding:28px; font-family:var(--font-mono); font-size:13px; line-height:2.2; overflow-x:auto;">
+        <div style="color:var(--color-ink-3);">/* Backgrounds */</div>
+        <div><span style="color:var(--color-accent);">--color-bg</span>: #F5F0E8;</div>
+        <div><span style="color:var(--color-accent);">--color-surface</span>: #FFFFFF;</div>
+        <div><span style="color:var(--color-accent);">--color-surface-warm</span>: #F5F0E8;</div>
+        <div><span style="color:var(--color-accent);">--color-surface-accent</span>: #DBBFB3;</div>
+        <div style="color:var(--color-ink-3); margin-top:8px;">/* Borders */</div>
+        <div><span style="color:var(--color-accent);">--color-border</span>: #D4C4B0;</div>
+        <div><span style="color:var(--color-accent);">--color-border-subtle</span>: #E8E0D6;</div>
+        <div style="color:var(--color-ink-3); margin-top:8px;">/* Ink (text) */</div>
+        <div><span style="color:var(--color-accent);">--color-ink-1</span>: #2C2420; <span style="color:var(--color-ink-3);">/* headings, primary */</span></div>
+        <div><span style="color:var(--color-accent);">--color-ink-2</span>: #5C524A; <span style="color:var(--color-ink-3);">/* body copy */</span></div>
+        <div><span style="color:var(--color-accent);">--color-ink-3</span>: #8C8078; <span style="color:var(--color-ink-3);">/* muted, labels */</span></div>
+        <div style="color:var(--color-ink-3); margin-top:8px;">/* Accent */</div>
+        <div><span style="color:var(--color-accent);">--color-accent</span>: #B5704F; <span style="color:var(--color-ink-3);">/* links, buttons, focus */</span></div>
+        <div><span style="color:var(--color-accent);">--color-accent-hover</span>: #9A5D3F;</div>
+      </div>
+    </section>
+
+    <section class="section" id="semantic-states">
+      <div class="section-label">Colour &middot; 03</div>
+      <h2 class="section-title">Semantic states</h2>
+      <p class="section-desc">Functional colours for feedback UI. Kept warm and muted to stay within the brand's earthy register.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+        <div style="background:var(--color-success-tint); border-left:4px solid var(--color-success); border-radius:var(--radius-md); padding:20px;">
+          <div style="font-weight:600; color:var(--color-success); font-size:14px; margin-bottom:6px;">Success</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-2);">--success: #5C8A52</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">--success-tint: #E8F0E4</div>
+        </div>
+        <div style="background:var(--color-warning-tint); border-left:4px solid var(--color-warning); border-radius:var(--radius-md); padding:20px;">
+          <div style="font-weight:600; color:var(--color-warning); font-size:14px; margin-bottom:6px;">Warning</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-2);">--warning: #C4903A</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">--warning-tint: #FDF3E0</div>
+        </div>
+        <div style="background:var(--color-error-tint); border-left:4px solid var(--color-error); border-radius:var(--radius-md); padding:20px;">
+          <div style="font-weight:600; color:var(--color-error); font-size:14px; margin-bottom:6px;">Error</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-2);">--error: #B84C4C</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">--error-tint: #FAEAEA</div>
+        </div>
+        <div style="background:var(--color-info-tint); border-left:4px solid var(--color-info); border-radius:var(--radius-md); padding:20px;">
+          <div style="font-weight:600; color:var(--color-info); font-size:14px; margin-bottom:6px;">Info</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-2);">--info: #5A7FA0</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">--info-tint: #E6EEF5</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="accessibility-matrix">
+      <div class="section-label">Colour &middot; 04</div>
+      <h2 class="section-title">Accessibility matrix</h2>
+      <p class="section-desc">Every text-on-background pairing used in the system with WCAG 2.1 contrast ratios.</p>
+
+      <div class="scroll-wrap">
+        <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:640px;">
+          <thead>
+            <tr style="background:var(--color-charcoal); color:var(--color-linen);">
+              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Text</th>
+              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Background</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Ratio</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Normal</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Large</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AAA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:var(--color-surface);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#2C2420; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-1</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#F5F0E8; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>bg</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">11.5:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#2C2420; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-1</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#FFFFFF; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>surface</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">14.7:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+            </tr>
+            <tr style="background:var(--color-surface);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#2C2420; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-1</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#DBBFB3; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>surface-accent</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">5.8:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#5C524A; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-2</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#F5F0E8; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>bg</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">5.9:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+            </tr>
+            <tr style="background:var(--color-surface);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#8C8078; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-3</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#F5F0E8; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>bg</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">3.3:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#8C8078; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-3</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#FFFFFF; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>surface</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">4.2:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-warning-tint); color:var(--color-warning); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Large only</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+            </tr>
+            <tr style="background:var(--color-surface);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#B5704F; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>accent</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#F5F0E8; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>bg</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">4.5:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-error-tint); color:var(--color-error); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Fail</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm);">
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#F5F0E8; border-radius:2px; border:1px solid var(--color-border-subtle); vertical-align:middle; margin-right:8px;"></span>linen</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#2C2420; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>charcoal</td>
+              <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">11.5:1</td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+              <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">ink-3 is restricted to large text (&ge;24px or &ge;18.67px bold) and decorative/label use only.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         TYPOGRAPHY
+         =============================================================== -->
+    <section class="section" id="font-stack">
+      <div class="section-label">Typography &middot; 01</div>
+      <h2 class="section-title">Font stack</h2>
+      <p class="section-desc">Three fonts with distinct roles. The logo is used as an SVG/image asset — these fonts support it.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+        <div class="card">
+          <div style="padding:28px 24px 20px;">
+            <div style="font-family:var(--font-display); font-size:32px; font-weight:700; color:var(--color-ink-1); margin-bottom:6px;">Recoleta</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-bottom:14px;">--font-display &middot; 400 500 600 700</div>
+            <p style="font-size:14px; color:var(--color-ink-2); line-height:1.5; margin:0;">Display and editorial. Section titles, hero headings, pull quotes, service names. The warm, rounded serif that echoes the logo's personality.</p>
+          </div>
+          <div style="padding:12px 24px; background:var(--color-surface-warm); font-size:12px; color:var(--color-ink-3); border-top:1px solid var(--color-border-subtle);">
+            <strong style="color:var(--color-success);">DO:</strong> Headings, titles &nbsp;&nbsp;
+            <strong style="color:var(--color-error);">DON'T:</strong> Body copy, buttons
+          </div>
+        </div>
+        <div class="card">
+          <div style="padding:28px 24px 20px;">
+            <div style="font-family:var(--font-body); font-size:32px; font-weight:700; color:var(--color-ink-1); margin-bottom:6px;">Plus Jakarta Sans</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-bottom:14px;">--font-body &middot; 300 400 500 600 700</div>
+            <p style="font-size:14px; color:var(--color-ink-2); line-height:1.5; margin:0;">Body and UI. Paragraphs, form labels, buttons, navigation, captions. Clean geometric sans with rounded terminals — friendly without being childish.</p>
+          </div>
+          <div style="padding:12px 24px; background:var(--color-surface-warm); font-size:12px; color:var(--color-ink-3); border-top:1px solid var(--color-border-subtle);">
+            <strong style="color:var(--color-success);">DO:</strong> Everything functional &nbsp;&nbsp;
+            <strong style="color:var(--color-error);">DON'T:</strong> Hero headings
+          </div>
+        </div>
+        <div class="card">
+          <div style="padding:28px 24px 20px;">
+            <div style="font-family:var(--font-mono); font-size:32px; font-weight:400; color:var(--color-ink-1); margin-bottom:6px;">Courier Prime</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-bottom:14px;">--font-mono &middot; 400 700 400i</div>
+            <p style="font-size:14px; color:var(--color-ink-2); line-height:1.5; margin:0;">Data and typewriter. Prices, durations, tables, treatment menus, code. Echoes the typewriter aesthetic of the printed price list.</p>
+          </div>
+          <div style="padding:12px 24px; background:var(--color-surface-warm); font-size:12px; color:var(--color-ink-3); border-top:1px solid var(--color-border-subtle);">
+            <strong style="color:var(--color-success);">DO:</strong> Prices, data, code &nbsp;&nbsp;
+            <strong style="color:var(--color-error);">DON'T:</strong> Body copy, headings
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="type-scale">
+      <div class="section-label">Typography &middot; 02</div>
+      <h2 class="section-title">Type scale</h2>
+      <p class="section-desc">All sizes &ge;14px. Headings use the display font, body uses the sans. Sizes below 768px use the smaller value in each range.</p>
+
+      <div class="card" style="overflow:hidden;">
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Hero display</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 700</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">48–56px &middot; -0.02em</div>
+          </div>
+          <div style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--color-ink-1); line-height:1.1; letter-spacing:-0.02em;">Your Skin, Our Craft</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Page heading H1</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 600</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">36–40px &middot; -0.02em</div>
+          </div>
+          <div style="font-family:var(--font-display); font-size:36px; font-weight:600; color:var(--color-ink-1); line-height:1.15; letter-spacing:-0.02em;">Brow Lamination</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Section heading H2</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 600</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">28–32px &middot; -0.01em</div>
+          </div>
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-ink-1); line-height:1.2; letter-spacing:-0.01em;">Treatment Details</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Subheading H3</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Body 600</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">20–24px</div>
+          </div>
+          <div style="font-family:var(--font-body); font-size:20px; font-weight:600; color:var(--color-ink-1); line-height:1.3;">Pre-Treatment Care</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Lead / deck</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Body 400</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">18px &middot; ink-2</div>
+          </div>
+          <div style="font-family:var(--font-body); font-size:18px; font-weight:400; color:var(--color-ink-2); line-height:1.5;">Designed to create body and lift to your natural lashes, this treatment is perfect for anyone looking to open and brighten eyes.</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Body copy</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Body 400</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">16px &middot; 1.6 &middot; ink-2</div>
+          </div>
+          <div style="font-family:var(--font-body); font-size:16px; font-weight:400; color:var(--color-ink-2); line-height:1.6;">Treatment lasts for up to 4–6 weeks. This treatment is not suitable for pregnancy and breastfeeding. A 48-hour patch test is required for new clients.</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Caption / label</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Body 500</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">14px &middot; 0.02em &middot; ink-3</div>
+          </div>
+          <div style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--color-ink-3); line-height:1.4; letter-spacing:0.02em;">PRE-TREATMENT &middot; POST-TREATMENT</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; padding:24px;">
+          <div style="min-width:140px; flex-shrink:0;">
+            <div style="font-size:11px; color:var(--color-ink-3); text-transform:uppercase; letter-spacing:0.05em;">Data / price</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Mono 400</div>
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">14–16px &middot; tabular</div>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:16px; font-weight:400; color:var(--color-ink-1); line-height:1.4;">50 MINS | &pound;42 &nbsp;&nbsp; 30 MINS | &pound;25</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="usage-rules">
+      <div class="section-label">Typography &middot; 03</div>
+      <h2 class="section-title">Usage rules</h2>
+      <p class="section-desc">Clear guidance on when to use each font and what to avoid.</p>
+
+      <div class="grid grid-2" style="gap:16px;">
+        <div style="background:var(--color-success-tint); border-radius:var(--radius-lg); padding:24px;">
+          <div style="font-weight:600; color:var(--color-success); font-size:14px; margin-bottom:12px;">DO</div>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li>Use Recoleta for anything the user reads first — headings, titles, hero text</li>
+            <li>Use Plus Jakarta Sans for everything functional — body, buttons, nav, forms</li>
+            <li>Use Courier Prime for prices, durations, and data tables</li>
+            <li>Minimum 14px for any text on screen</li>
+            <li>Use letter-spacing &ge;0.02em on uppercase labels</li>
+            <li>Use ink-1 for headings, ink-2 for body, ink-3 for muted/labels only</li>
+          </ul>
+        </div>
+        <div style="background:var(--color-error-tint); border-radius:var(--radius-lg); padding:24px;">
+          <div style="font-weight:600; color:var(--color-error); font-size:14px; margin-bottom:12px;">DON'T</div>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li>Use Recoleta for body paragraphs — it's a display face</li>
+            <li>Use Plus Jakarta Sans for hero headings — that's Recoleta's job</li>
+            <li>Use Courier Prime for descriptions or body copy</li>
+            <li>Set any text below 14px — it's the system minimum</li>
+            <li>Mix more than 2 fonts on one surface (card, section, panel)</li>
+            <li>Use ink-3 for normal-sized body text (fails AA contrast)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         COMBINATIONS
+         =============================================================== -->
+    <section class="section" id="colour-font-pairings">
+      <div class="section-label">Combinations &middot; 01</div>
+      <h2 class="section-title">Colour + font pairings</h2>
+      <p class="section-desc">Approved combinations shown as live examples. Each pairing includes its contrast ratio.</p>
+
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <!-- Pairing 1: Charcoal on Linen -->
+        <div class="card" style="padding:32px;">
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-ink-1); margin-bottom:12px;">Ansikt Brow Lamination</div>
+          <p style="color:var(--color-ink-2); max-width:500px; margin-bottom:16px;">Together with a trained HD BrowSculpt specialist, we will discuss your desired brow goal whether it be simply natural or bold look.</p>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">Charcoal on Linen &middot; ink-1 #2C2420 on bg #F5F0E8 &middot; 11.5:1 ✓ AAA</div>
+        </div>
+
+        <!-- Pairing 2: Linen on Charcoal -->
+        <div class="card" style="background:var(--color-charcoal); padding:32px;">
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-linen); margin-bottom:8px;">Ansikt Luxury Facial</div>
+          <div style="font-family:var(--font-body); font-size:14px; color:var(--color-plaster); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:4px;">with Alpha H</div>
+          <div style="font-family:var(--font-mono); font-size:16px; color:var(--color-blush);">50 MINS | &pound;50</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:16px;">Linen on Charcoal &middot; #F5F0E8 on #2C2420 &middot; 11.5:1 ✓ AAA</div>
+        </div>
+
+        <!-- Pairing 3: Terracotta on Linen -->
+        <div class="card" style="padding:32px;">
+          <p style="color:var(--color-ink-2); margin-bottom:16px;">For the best results, please avoid waxing or threading within 24 hours. <a href="#" style="color:var(--color-accent); font-weight:500;">Learn more about pre-treatment care &rarr;</a></p>
+          <div style="display:flex; gap:12px; margin-bottom:16px;">
+            <span style="font-family:var(--font-body); background:var(--color-accent); color:var(--color-linen); padding:10px 24px; border-radius:var(--radius-md); font-size:14px; font-weight:600;">Book Now</span>
+            <span style="font-family:var(--font-body); border:1.5px solid var(--color-accent); color:var(--color-accent); padding:10px 24px; border-radius:var(--radius-md); font-size:14px; font-weight:600;">View Treatments</span>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">Terracotta on Linen &middot; accent #B5704F on bg #F5F0E8 &middot; 4.5:1 ✓ AA</div>
+        </div>
+
+        <!-- Pairing 4: Charcoal on Blush -->
+        <div style="background:var(--color-surface-accent); border-radius:var(--radius-xl); padding:32px;">
+          <div style="font-family:var(--font-display); font-size:24px; font-weight:400; color:var(--color-ink-1); line-height:1.4; margin-bottom:12px;">&ldquo;Lauren's studio is beautiful and calming, the decor enhances the overall experience&rdquo;</div>
+          <div style="font-family:var(--font-mono); font-size:13px; color:var(--color-ink-2); font-style:italic;">— Hollie, Putney</div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:16px;">Charcoal on Blush &middot; ink-1 #2C2420 on #DBBFB3 &middot; 5.8:1 ✓ AA</div>
+        </div>
+
+        <!-- Pairing 5: Courier Prime on warm surface -->
+        <div class="card" style="background:var(--color-surface-warm); padding:32px;">
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); line-height:2;">
+            <div style="display:flex; justify-content:space-between;"><span>Ansikt Luxury Facial</span><span>50 mins &nbsp; &pound;50</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>Dermaplaning Reform</span><span>50 mins &nbsp; &pound;50</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>Diamond Microdermabrasion</span><span>50 mins &nbsp; &pound;60</span></div>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:16px;">Courier Prime on warm surface &middot; ink-1 #2C2420 on #F5F0E8 &middot; 11.5:1 ✓ AAA</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         COMPONENTS
+         =============================================================== -->
+    <section class="section" id="treatment-card">
+      <div class="section-label">Components &middot; 01</div>
+      <h2 class="section-title">Treatment card</h2>
+      <p class="section-desc">Reference card showing all three fonts working together with real treatment data.</p>
+
+      <div class="card">
+        <div style="background:var(--color-charcoal); padding:36px; position:relative;">
+          <div style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-linen); margin-bottom:4px;">Ansikt Luxury Facial</div>
+          <div style="font-family:var(--font-body); font-size:14px; color:var(--color-plaster); letter-spacing:0.04em; text-transform:uppercase;">with Alpha H</div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-blush); position:absolute; top:36px; right:36px;">50 MINS | &pound;50</div>
+        </div>
+        <div style="padding:32px;">
+          <p style="color:var(--color-ink-2); line-height:1.7; margin-bottom:24px;">Targeting fine lines and dehydration whilst improving skin elasticity and complexion, this facial offers a combined treatment of skin rejuvenation and relaxation, beautifully complemented with a hand and arm massage.</p>
+
+          <div style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--color-accent); margin-bottom:8px;">Pre-treatment</div>
+          <div style="font-family:var(--font-mono); font-size:14px; color:var(--color-ink-3); line-height:1.6; padding:16px; background:var(--color-surface-warm); border-radius:var(--radius-md); margin-bottom:24px;">Complete our client form upon arrival. We'll start with a skin analysis and consultation. Feel free to come as you are — no need to remove makeup.</div>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:var(--color-accent); color:var(--color-linen); border:none; padding:12px 28px; border-radius:var(--radius-md); cursor:pointer;">Book This Treatment</button>
+            <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:transparent; color:var(--color-accent); border:1.5px solid var(--color-accent); padding:12px 28px; border-radius:var(--radius-md); cursor:pointer;">View All Facials</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:12px; font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">
+        <div style="background:var(--color-surface); padding:12px; border-radius:var(--radius-md);">with led upgrade: 55 MINS | &pound;60</div>
+        <div style="background:var(--color-surface); padding:12px; border-radius:var(--radius-md);">mini facial: 25 MINS | &pound;35</div>
+      </div>
+    </section>
+
+    <section class="section" id="treatment-menu">
+      <div class="section-label">Components &middot; 02</div>
+      <h2 class="section-title">Treatment menu</h2>
+      <p class="section-desc">Price list layout echoing the printed typewriter menu.</p>
+
+      <div class="card" style="padding:36px;">
+        <h3 style="font-family:var(--font-display); font-size:28px; font-weight:600; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--color-border);">Facials</h3>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-border-subtle);">
+          <div><div style="font-weight:500; color:var(--color-ink-1);">Ansikt Luxury Facial</div><div style="font-size:13px; color:var(--color-ink-3);">with Alpha H &middot; Ultimate Skin Rejuvenation</div></div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">50 mins &nbsp; &pound;50</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-border-subtle);">
+          <div><div style="font-weight:500; color:var(--color-ink-1);">Dermaplaning Reform</div><div style="font-size:13px; color:var(--color-ink-3);">with LED Light Therapy</div></div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">50 mins &nbsp; &pound;50</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-border-subtle);">
+          <div><div style="font-weight:500; color:var(--color-ink-1);">Diamond Microdermabrasion</div><div style="font-size:13px; color:var(--color-ink-3);">Non-Surgical Skin Solution</div></div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">50 mins &nbsp; &pound;60</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-border-subtle);">
+          <div><div style="font-weight:500; color:var(--color-ink-1);">LED Light Therapy</div><div style="font-size:13px; color:var(--color-ink-3);">Green &amp; Red Light Options</div></div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">45 mins &nbsp; &pound;45</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0;">
+          <div><div style="font-weight:500; color:var(--color-ink-1);">Glass Skin</div><div style="font-size:13px; color:var(--color-ink-3);">Teen Facial &middot; Korean Skincare</div></div>
+          <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">25 mins &nbsp; &pound;30</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="buttons">
+      <div class="section-label">Components &middot; 03</div>
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-desc">Primary, secondary, outline, and disabled states across three sizes.</p>
+
+      <div style="margin-bottom:32px;">
+        <div style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-ink-3); margin-bottom:12px;">Variants</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:24px;">
+          <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:var(--color-accent); color:var(--color-linen); border:none; padding:12px 28px; border-radius:var(--radius-md); cursor:pointer;">Primary</button>
+          <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:var(--color-charcoal); color:var(--color-linen); border:none; padding:12px 28px; border-radius:var(--radius-md); cursor:pointer;">Secondary</button>
+          <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:transparent; color:var(--color-accent); border:1.5px solid var(--color-accent); padding:12px 28px; border-radius:var(--radius-md); cursor:pointer;">Outline</button>
+          <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:var(--color-border-subtle); color:var(--color-ink-3); border:none; padding:12px 28px; border-radius:var(--radius-md); cursor:not-allowed;" disabled>Disabled</button>
+        </div>
+
+        <div style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-ink-3); margin-bottom:12px;">Sizes</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:24px;">
+          <button style="font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--color-accent); color:var(--color-linen); border:none; padding:8px 20px; border-radius:var(--radius-md); cursor:pointer; height:32px;">Small</button>
+          <button style="font-family:var(--font-body); font-weight:600; font-size:14px; background:var(--color-accent); color:var(--color-linen); border:none; padding:10px 24px; border-radius:var(--radius-md); cursor:pointer; height:40px;">Medium</button>
+          <button style="font-family:var(--font-body); font-weight:600; font-size:16px; background:var(--color-accent); color:var(--color-linen); border:none; padding:12px 32px; border-radius:var(--radius-md); cursor:pointer; height:48px;">Large</button>
+        </div>
+      </div>
+
+      <div class="card" style="padding:24px;">
+        <div style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-ink-3); margin-bottom:12px;">Specs</div>
+        <div style="font-family:var(--font-mono); font-size:13px; color:var(--color-ink-2); line-height:2;">
+          <div>font-family: var(--font-body)</div>
+          <div>font-weight: 600</div>
+          <div>border-radius: var(--radius-md) /* 8px */</div>
+          <div>focus: 2px solid var(--color-accent), 2px offset</div>
+          <div>min touch target: 44 &times; 44px (mobile)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="callout">
+      <div class="section-label">Components &middot; 04</div>
+      <h2 class="section-title">Callout / quote</h2>
+      <p class="section-desc">Testimonial and informational callout cards on accent surfaces.</p>
+
+      <div style="background:var(--color-surface-accent); border-radius:var(--radius-xl); padding:36px; margin-bottom:20px;">
+        <div style="font-family:var(--font-display); font-size:24px; font-weight:400; color:var(--color-ink-1); line-height:1.4; margin-bottom:16px;">&ldquo;The treatment was everything and more that I could have hoped for&rdquo;</div>
+        <div style="font-family:var(--font-mono); font-size:13px; color:var(--color-ink-2); font-style:italic;">— Linda, Balham</div>
+      </div>
+
+      <div style="background:var(--color-surface-warm); border-left:4px solid var(--color-accent); border-radius:var(--radius-md); padding:24px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--color-ink-1); margin-bottom:8px;">Pre-treatment notice</div>
+        <div style="font-family:var(--font-mono); font-size:14px; color:var(--color-ink-2); line-height:1.6;">If you are new to Ansikt, be sure to complete our client form and patch test at least 48 hours before your appointment. Patch-testing required.</div>
+      </div>
+    </section>
+
+    <section class="section" id="navigation">
+      <div class="section-label">Components &middot; 05</div>
+      <h2 class="section-title">Navigation</h2>
+      <p class="section-desc">Header navigation bar pattern. This is a reference component — not the sidebar of this document.</p>
+
+      <div class="card" style="padding:16px 28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        <div style="font-family:var(--font-display); font-size:22px; color:var(--color-ink-1);">ansikt</div>
+        <div style="display:flex; gap:28px; flex-wrap:wrap;">
+          <span style="font-size:14px; font-weight:500; color:var(--color-accent);">Treatments</span>
+          <span style="font-size:14px; font-weight:500; color:var(--color-ink-2);">About</span>
+          <span style="font-size:14px; font-weight:500; color:var(--color-ink-2);">Gallery</span>
+          <span style="font-size:14px; font-weight:500; color:var(--color-ink-2);">Contact</span>
+        </div>
+        <button style="font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--color-accent); color:var(--color-linen); border:none; padding:10px 24px; border-radius:var(--radius-md); cursor:pointer;">Book Now</button>
+      </div>
+    </section>
+
+    <section class="section" id="tables">
+      <div class="section-label">Components &middot; 06</div>
+      <h2 class="section-title">Tables</h2>
+      <p class="section-desc">Data table styling for treatment comparisons and pricing.</p>
+
+      <div class="scroll-wrap">
+        <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:560px;">
+          <thead>
+            <tr style="background:var(--color-charcoal); color:var(--color-linen);">
+              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Treatment</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Duration</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Price</th>
+              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Pregnancy Safe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:var(--color-surface); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Brow Lamination</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">50 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;42</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-error);">No</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Ultimate Brow Tidy</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">30 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;25</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-success);">Yes</span></td>
+            </tr>
+            <tr style="background:var(--color-surface); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Lash Lift &amp; Curl</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">30 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;25</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-success);">Yes</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Ansikt Luxury Facial</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">50 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;50</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-success);">Yes</span></td>
+            </tr>
+            <tr style="background:var(--color-surface); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Dermaplaning Reform</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">50 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;50</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-success);">Yes</span></td>
+            </tr>
+            <tr style="background:var(--color-surface-warm); border-bottom:1px solid var(--color-border-subtle);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Diamond Microdermabrasion</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">50 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;60</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-error);">No</span></td>
+            </tr>
+            <tr style="background:var(--color-surface);">
+              <td style="padding:12px 16px; color:var(--color-ink-1); font-weight:500;">Glass Skin (Teen Facial)</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">25 mins</td>
+              <td style="padding:12px 16px; text-align:center; font-family:var(--font-mono);">&pound;30</td>
+              <td style="padding:12px 16px; text-align:center;"><span style="color:var(--color-success);">Yes</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         IMAGERY
+         =============================================================== -->
+    <section class="section" id="photography">
+      <div class="section-label">Imagery &middot; 01</div>
+      <h2 class="section-title">Photography guidelines</h2>
+      <p class="section-desc">Derived from existing flipbook imagery and salon aesthetic. All photography should feel warm, natural, and considered.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Lighting</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Warm, natural, side-lit. Golden hour quality. Avoid harsh flash or cool fluorescent lighting.</p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Colour Grading</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Warm earth tones, slightly desaturated. Avoid high-saturation or cool/blue colour grading.</p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Skin</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Natural texture, dewy, minimal retouching. Freckles and pores are welcome. No heavy airbrushing.</p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Composition</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Close crops, eye-level or slightly above. Generous negative space in warm neutrals.</p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Environment</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Bare plaster, natural materials, dried flowers, exposed wood, ceramic. No clinical or sterile settings.</p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div style="font-weight:600; color:var(--color-ink-1); margin-bottom:8px;">Mood</div>
+          <p style="font-size:14px; color:var(--color-ink-2); margin:0; line-height:1.6;">Calm, considered, intimate. Not high-energy or overly glossy. Think editorial beauty, not commercial.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="grid grid-2" style="gap:16px;">
+          <div><img src="assets/imagery/salon-interior.png" alt="Ansikt salon interior with bare plaster walls, exposed wooden beams, treatment bed with cream linen, and dried pampas grass in ceramic vase" style="border-radius:var(--radius-lg); width:100%; height:280px; object-fit:cover;"></div>
+          <div><img src="assets/imagery/beauty-portrait.png" alt="Editorial beauty portrait with natural dewy skin, warm side lighting, and earthy colour grading" style="border-radius:var(--radius-lg); width:100%; height:280px; object-fit:cover;"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="treatment-imagery">
+      <div class="section-label">Imagery &middot; 02</div>
+      <h2 class="section-title">Treatment examples</h2>
+      <p class="section-desc">Example imagery showing the approved photographic style for each treatment category.</p>
+
+      <div class="grid grid-2" style="gap:16px;">
+        <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden;">
+          <img src="assets/imagery/facial-treatment.png" alt="Facial treatment in progress with warm ambient lighting and bare plaster wall background" style="width:100%; height:240px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:16px 20px; background:linear-gradient(transparent, rgba(44,36,32,0.7));">
+            <div style="font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--color-linen);">Facials</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-plaster);">Warm, close-up, calm setting</div>
+          </div>
+        </div>
+        <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden;">
+          <img src="assets/imagery/brow-detail.png" alt="Close-up of natural groomed eyebrows with warm natural lighting" style="width:100%; height:240px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:16px 20px; background:linear-gradient(transparent, rgba(44,36,32,0.7));">
+            <div style="font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--color-linen);">Brows</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-plaster);">Natural detail, eye-level macro</div>
+          </div>
+        </div>
+        <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden;">
+          <img src="assets/imagery/lash-detail.png" alt="Extreme close-up of natural eyelashes with subtle curl and warm tones" style="width:100%; height:240px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:16px 20px; background:linear-gradient(transparent, rgba(44,36,32,0.7));">
+            <div style="font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--color-linen);">Lashes</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-plaster);">Close crop, natural curl detail</div>
+          </div>
+        </div>
+        <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden;">
+          <img src="assets/imagery/skincare-products.png" alt="Overhead flat lay of skincare products on bare plaster surface with dried lavender and ceramic dish" style="width:100%; height:240px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:16px 20px; background:linear-gradient(transparent, rgba(44,36,32,0.7));">
+            <div style="font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--color-linen);">Environment / Product</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-plaster);">Natural materials, warm surfaces</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ===============================================================
+         ACCESSIBILITY
+         =============================================================== -->
+    <section class="section" id="aa-guide">
+      <div class="section-label">Accessibility &middot; 01</div>
+      <h2 class="section-title">AA compliance guide</h2>
+      <p class="section-desc">All design decisions in this system are made with WCAG 2.1 AA compliance. This section provides practical guidance for maintaining accessibility.</p>
+
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Contrast Requirements</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li><strong>Normal text</strong> (below 24px / 18.67px bold): minimum <code>4.5:1</code> contrast ratio</li>
+            <li><strong>Large text</strong> (24px+ or 18.67px+ bold): minimum <code>3:1</code> contrast ratio</li>
+            <li><strong>UI components</strong> and graphical objects: minimum <code>3:1</code> contrast ratio</li>
+            <li>See the <a href="#accessibility-matrix">accessibility matrix</a> for all approved pairings</li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Typography</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li><strong>System minimum:</strong> 14px — no text in the system may be set below this</li>
+            <li><strong>Body copy:</strong> 16px recommended minimum for comfortable reading</li>
+            <li><strong>Line-height:</strong> minimum 1.4 for body text, 1.6 recommended</li>
+            <li><strong>Paragraph width:</strong> ~70 characters maximum for readability</li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Interactive Elements</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li><strong>Touch targets:</strong> minimum 44 &times; 44px on all interactive elements</li>
+            <li><strong>Focus states:</strong> <code>2px solid var(--color-accent)</code> outline with <code>2px</code> offset</li>
+            <li>Focus must be visible on all interactive elements — never remove <code>outline</code> without an alternative</li>
+            <li>Keyboard navigation must reach all interactive elements in logical order</li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Colour Usage</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li>Never use colour as the sole indicator of state or meaning</li>
+            <li>Always pair colour with text, icon, or pattern (e.g. error = red tint + red text + descriptive message)</li>
+            <li>The pregnancy-safe column in the treatment table uses colour <em>and</em> text ("Yes"/"No")</li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Images</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li>All images must have descriptive <code>alt</code> text</li>
+            <li>Decorative images use <code>alt=""</code></li>
+            <li>Complex images (charts, diagrams) need long descriptions via <code>aria-describedby</code></li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:28px;">
+          <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Motion</h3>
+          <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
+            <li>Respect <code>prefers-reduced-motion</code> media query</li>
+            <li>No auto-playing animations</li>
+            <li>Any motion should be subtle and purposeful — matching the brand's calm aesthetic</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div style="text-align:center; padding:48px 0 32px; border-top:1px solid var(--color-border);">
+      <div style="font-family:var(--font-display); font-size:20px; color:var(--color-ink-1); margin-bottom:8px;">ansikt</div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">Brand Identity System v1.0 &middot; @ansikt.uk</div>
+    </div>
+
+  </main>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    });
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+
+    // Close sidebar on link click (mobile)
+    sidebar.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('open');
+        }
+      });
+    });
+
+    // Scroll spy
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.sidebar-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+
+    // Smooth scroll
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book — Ansikt Beauty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =================================================================
+       CUSTOM FONTS
+       ================================================================= */
+    @font-face {
+      font-family: 'Ritualist';
+      src: url('fonts/Ritualist-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =================================================================
+       TOKENS
+       ================================================================= */
+    :root {
+      --plaster: #D4C4B0;
+      --linen: #F5F0E8;
+      --blush: #DBBFB3;
+      --charcoal: #2C2420;
+      --terracotta: #B5704F;
+      --olive: #B8D964;
+
+      --bg: #F5F0E8;
+      --surface: #FFFFFF;
+      --ink-1: #2C2420;
+      --ink-2: #5C524A;
+      --ink-3: #8C8078;
+      --accent: #B5704F;
+
+      --display: 'Ritualist', Georgia, serif;
+      --body: 'Plus Jakarta Sans', sans-serif;
+      --mono: 'Courier Prime', 'Courier New', monospace;
+    }
+
+    /* =================================================================
+       RESET
+       ================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink-2);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    ::selection { background: var(--blush); color: var(--charcoal); }
+
+    /* =================================================================
+       FLOATING MENU BUTTON
+       ================================================================= */
+    .menu-btn {
+      position: fixed;
+      top: 24px;
+      right: clamp(20px, 4vw, 48px);
+      z-index: 1100;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--charcoal);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(44, 36, 32, 0.25);
+    }
+    .menu-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(44, 36, 32, 0.35);
+    }
+    .menu-btn span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--linen);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.3s ease,
+                  width 0.3s ease;
+      transform-origin: center;
+    }
+    .menu-btn.open {
+      background: transparent;
+      box-shadow: none;
+    }
+    .menu-btn.open:hover {
+      transform: scale(1.08);
+    }
+    .menu-btn.open span {
+      background: var(--linen);
+      width: 24px;
+    }
+    .menu-btn.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .menu-btn.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    /* Floating logo */
+    .floating-logo {
+      position: fixed;
+      top: 28px;
+      left: clamp(20px, 4vw, 48px);
+      z-index: 1100;
+      font-family: var(--display);
+      font-size: 22px;
+      color: var(--charcoal);
+      transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: auto;
+    }
+    .floating-logo.inverted {
+      color: var(--linen);
+    }
+
+    /* =================================================================
+       FULLSCREEN NAV TAKEOVER
+       ================================================================= */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1050;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .nav-overlay-bg {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .nav-bg-left {
+      background: var(--charcoal);
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .nav-bg-right {
+      background: var(--olive);
+      transform: translateY(-100%);
+      transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+      transition-delay: 0.05s;
+    }
+    .nav-overlay.open .nav-bg-left,
+    .nav-overlay.open .nav-bg-right {
+      transform: translateY(0);
+    }
+    .nav-overlay-content {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      padding: clamp(80px, 10vh, 120px) clamp(32px, 8vw, 120px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .nav-overlay.open .nav-overlay-content {
+      opacity: 1;
+      transition-delay: 0.35s;
+    }
+    .nav-overlay.open {
+      pointer-events: auto;
+    }
+    .nav-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-menu-item {
+      display: block;
+      overflow: hidden;
+    }
+    .nav-menu-item a {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      font-family: var(--display);
+      font-size: clamp(42px, 6vw, 80px);
+      color: var(--linen);
+      line-height: 1.2;
+      padding: 8px 0;
+      transform: translateY(105%);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.3s ease;
+    }
+    .nav-overlay.open .nav-menu-item a {
+      transform: translateY(0);
+    }
+    .nav-overlay.open .nav-menu-item:nth-child(1) a { transition-delay: 0.3s; }
+    .nav-overlay.open .nav-menu-item:nth-child(2) a { transition-delay: 0.38s; }
+    .nav-overlay.open .nav-menu-item:nth-child(3) a { transition-delay: 0.46s; }
+    .nav-overlay.open .nav-menu-item:nth-child(4) a { transition-delay: 0.54s; }
+    .nav-menu-item a:hover {
+      color: var(--olive);
+    }
+    .nav-menu-num {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--olive);
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+    .nav-sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 60vh;
+      padding-left: clamp(24px, 4vw, 80px);
+      border-left: 1px solid rgba(245, 240, 232, 0.12);
+    }
+    .nav-sidebar-tagline {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--linen);
+      opacity: 0.5;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.8;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: 0.55s;
+    }
+    .nav-overlay.open .nav-sidebar-tagline {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    .nav-sidebar-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: 0.6s;
+    }
+    .nav-overlay.open .nav-sidebar-contact {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .nav-sidebar-contact a {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--linen);
+      opacity: 0.6;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-sidebar-contact a:hover {
+      opacity: 1;
+      color: var(--olive);
+    }
+    .nav-sidebar-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--olive);
+      padding: 16px 36px;
+      border-radius: 4px;
+      align-self: flex-start;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.2s ease;
+      transition-delay: 0.65s;
+    }
+    .nav-overlay.open .nav-sidebar-cta {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .nav-sidebar-cta:hover {
+      background: #c8e874;
+    }
+    .nav-sidebar-cta svg {
+      transition: transform 0.3s ease;
+    }
+    .nav-sidebar-cta:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Mobile fullscreen nav */
+    @media (max-width: 768px) {
+      .nav-overlay-bg {
+        grid-template-columns: 1fr;
+      }
+      .nav-bg-left {
+        display: none;
+      }
+      .nav-bg-right {
+        background: var(--charcoal);
+        transform: translateY(-100%);
+      }
+      .nav-overlay-content {
+        grid-template-columns: 1fr;
+        padding: 120px 32px 60px;
+        align-items: flex-start;
+      }
+      .nav-menu-item a {
+        font-size: clamp(36px, 10vw, 52px);
+      }
+      .nav-sidebar {
+        height: auto;
+        border-left: none;
+        padding-left: 0;
+        padding-top: 40px;
+        gap: 32px;
+      }
+    }
+
+    /* =================================================================
+       PAGE HEADER
+       ================================================================= */
+    .page-header {
+      padding: clamp(120px, 15vh, 180px) clamp(24px, 5vw, 64px) clamp(40px, 5vw, 60px);
+      text-align: center;
+    }
+    .page-header-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+    }
+    .page-header-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 400;
+      color: var(--ink-1);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .page-header-sub {
+      font-weight: 300;
+      font-size: 17px;
+      color: var(--ink-3);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* =================================================================
+       PROGRESS BAR
+       ================================================================= */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0 clamp(24px, 5vw, 64px) clamp(40px, 5vw, 64px);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .progress-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 2px solid var(--plaster);
+      background: transparent;
+      color: var(--plaster);
+    }
+    .progress-step.active .progress-circle {
+      background: var(--olive);
+      border-color: var(--olive);
+      color: var(--charcoal);
+      transform: scale(1.1);
+    }
+    .progress-step.completed .progress-circle {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: var(--linen);
+    }
+    .progress-label {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-3);
+      transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      white-space: nowrap;
+    }
+    .progress-step.active .progress-label {
+      color: var(--ink-1);
+    }
+    .progress-step.completed .progress-label {
+      color: var(--ink-2);
+    }
+    .progress-line {
+      flex: 1;
+      height: 2px;
+      background: var(--plaster);
+      margin: 0 -4px;
+      margin-bottom: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-line::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--charcoal);
+      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .progress-line.filled::after {
+      width: 100%;
+    }
+
+    /* =================================================================
+       BOOKING CONTAINER
+       ================================================================= */
+    .booking-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 64px) clamp(60px, 8vw, 100px);
+      position: relative;
+      overflow: hidden;
+    }
+    .booking-steps-wrapper {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .booking-step {
+      min-width: 100%;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
+                  transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+    }
+    .booking-step.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =================================================================
+       STEP 1: TREATMENTS
+       ================================================================= */
+    .treatment-category {
+      margin-bottom: 40px;
+    }
+    .category-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(44, 36, 32, 0.08);
+    }
+    .treatment-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .treatment-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border: 2px solid rgba(44, 36, 32, 0.06);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.3s ease;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .treatment-card:hover {
+      border-color: rgba(44, 36, 32, 0.12);
+      background: rgba(255, 255, 255, 0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(44, 36, 32, 0.06);
+    }
+    .treatment-card.selected {
+      border-color: var(--olive);
+      background: rgba(184, 217, 100, 0.08);
+      box-shadow: 0 0 0 1px var(--olive);
+    }
+    .treatment-card-info {
+      flex: 1;
+    }
+    .treatment-card-name {
+      font-family: var(--display);
+      font-size: 20px;
+      color: var(--ink-1);
+      margin-bottom: 4px;
+    }
+    .treatment-card-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-3);
+      line-height: 1.5;
+      max-width: 440px;
+    }
+    .treatment-card-meta {
+      text-align: right;
+      flex-shrink: 0;
+      margin-left: 24px;
+    }
+    .treatment-card-price {
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--ink-1);
+      font-weight: 700;
+    }
+    .treatment-card-duration {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+    }
+
+    /* =================================================================
+       STEP 2: CALENDAR & TIME
+       ================================================================= */
+    .calendar-section {
+      margin-bottom: 40px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .calendar-month {
+      font-family: var(--display);
+      font-size: 24px;
+      color: var(--ink-1);
+    }
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .calendar-nav button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(44, 36, 32, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-2);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .calendar-nav button:hover {
+      background: rgba(44, 36, 32, 0.04);
+      border-color: rgba(44, 36, 32, 0.2);
+    }
+    .calendar-nav button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .calendar-dow {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-3);
+      text-align: center;
+      padding: 8px 0;
+    }
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--body);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--ink-2);
+      transition: background 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      border: none;
+      background: transparent;
+    }
+    .calendar-day:hover:not(.disabled):not(.empty) {
+      background: rgba(184, 217, 100, 0.2);
+      transform: scale(1.1);
+    }
+    .calendar-day.selected {
+      background: var(--olive);
+      color: var(--charcoal);
+      font-weight: 700;
+      transform: scale(1.1);
+    }
+    .calendar-day.disabled {
+      color: var(--plaster);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+    .calendar-day.today {
+      border: 2px solid var(--olive);
+    }
+    .calendar-day.empty {
+      cursor: default;
+    }
+
+    /* Time slots */
+    .time-section-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+    }
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 10px;
+    }
+    .time-slot {
+      padding: 10px 16px;
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 13px;
+      text-align: center;
+      border: 1px solid rgba(44, 36, 32, 0.1);
+      background: transparent;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .time-slot:hover:not(.disabled) {
+      border-color: var(--olive);
+      background: rgba(184, 217, 100, 0.1);
+    }
+    .time-slot.selected {
+      background: var(--olive);
+      border-color: var(--olive);
+      color: var(--charcoal);
+      font-weight: 700;
+    }
+    .time-slot.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .no-date-message {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--ink-3);
+      text-align: center;
+      padding: 32px 0;
+    }
+
+    /* =================================================================
+       STEP 3: DETAILS FORM
+       ================================================================= */
+    .details-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-label {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-2);
+    }
+    .form-input {
+      font-family: var(--body);
+      font-size: 15px;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(44, 36, 32, 0.1);
+      border-radius: 6px;
+      background: rgba(212, 196, 176, 0.15);
+      color: var(--ink-1);
+      outline: none;
+      transition: border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.3s ease;
+    }
+    .form-input::placeholder {
+      color: var(--ink-3);
+      font-weight: 300;
+    }
+    .form-input:focus {
+      border-color: var(--charcoal);
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(44, 36, 32, 0.06);
+    }
+    .form-input.error {
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(181, 112, 79, 0.1);
+    }
+    .form-error {
+      font-size: 12px;
+      color: var(--terracotta);
+      font-weight: 500;
+      min-height: 18px;
+      transition: opacity 0.2s ease;
+    }
+    textarea.form-input {
+      resize: vertical;
+      min-height: 100px;
+      font-family: var(--body);
+    }
+
+    /* =================================================================
+       STEP 4: CONFIRMATION
+       ================================================================= */
+    .confirmation-card {
+      background: var(--charcoal);
+      border-radius: 12px;
+      padding: clamp(32px, 5vw, 48px);
+      margin-bottom: 24px;
+    }
+    .confirm-heading {
+      font-family: var(--display);
+      font-size: 28px;
+      color: var(--linen);
+      margin-bottom: 32px;
+    }
+    .confirm-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .confirm-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+    }
+    .confirm-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .confirm-row-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-3);
+    }
+    .confirm-row-value {
+      font-family: var(--body);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--linen);
+      text-align: right;
+    }
+    .confirm-row-value.price {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--olive);
+    }
+    .confirm-policy {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* =================================================================
+       BOOKING SUCCESS
+       ================================================================= */
+    .booking-success {
+      text-align: center;
+      padding: clamp(40px, 6vw, 80px) 0;
+      display: none;
+    }
+    .booking-success.visible {
+      display: block;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--olive);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: successPop 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes successPop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-title {
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 40px);
+      color: var(--ink-1);
+      margin-bottom: 12px;
+    }
+    .success-text {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--ink-3);
+      max-width: 400px;
+      margin: 0 auto 32px;
+    }
+    .success-email {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-3);
+      font-style: italic;
+    }
+
+    /* =================================================================
+       BUTTONS
+       ================================================================= */
+    .booking-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--charcoal);
+      color: var(--olive);
+      padding: 16px 36px;
+      border-radius: 6px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+      margin-left: auto;
+    }
+    .btn-continue:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44, 36, 32, 0.25);
+    }
+    .btn-continue:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .btn-continue svg {
+      transition: transform 0.3s ease;
+    }
+    .btn-continue:hover:not(:disabled) svg {
+      transform: translateX(3px);
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      background: transparent;
+      color: var(--ink-3);
+      padding: 16px 20px;
+      border-radius: 6px;
+      transition: color 0.2s ease;
+    }
+    .btn-back:hover {
+      color: var(--ink-1);
+    }
+    .btn-back svg {
+      transition: transform 0.3s ease;
+    }
+    .btn-back:hover svg {
+      transform: translateX(-3px);
+    }
+    .btn-confirm {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      background: var(--olive);
+      color: var(--charcoal);
+      padding: 18px 44px;
+      border-radius: 6px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-left: auto;
+    }
+    .btn-confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(184, 217, 100, 0.3);
+    }
+
+    /* =================================================================
+       FOOTER
+       ================================================================= */
+    .footer {
+      background: var(--charcoal);
+      padding: clamp(48px, 6vw, 80px) clamp(24px, 5vw, 64px) clamp(24px, 3vw, 40px);
+      border-top: 4px solid var(--olive);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 24px;
+      color: var(--linen);
+      margin-bottom: 4px;
+    }
+    .footer-brand-sub {
+      font-family: var(--body);
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      color: var(--ink-3);
+    }
+    .footer-heading {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--plaster);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--olive); }
+    .footer-contact {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--plaster);
+      line-height: 2;
+    }
+    .footer-bar {
+      border-top: 1px solid rgba(245, 240, 232, 0.08);
+      padding-top: 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* =================================================================
+       REVEAL ANIMATION
+       ================================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translate(0);
+    }
+    .s1 { transition-delay: 0.1s; }
+    .s2 { transition-delay: 0.2s; }
+    .s3 { transition-delay: 0.3s; }
+
+    /* =================================================================
+       REDUCED MOTION
+       ================================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .booking-step { opacity: 1; transform: none; }
+      .booking-steps-wrapper { transition: none; }
+      .progress-circle { transition: none; }
+    }
+
+    /* =================================================================
+       RESPONSIVE
+       ================================================================= */
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .treatment-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .treatment-card-meta {
+        text-align: left;
+        margin-left: 0;
+        display: flex;
+        gap: 12px;
+        align-items: baseline;
+      }
+      .progress-label {
+        font-size: 9px;
+        letter-spacing: 0.03em;
+      }
+      .progress-circle {
+        width: 38px;
+        height: 38px;
+        font-size: 12px;
+      }
+      .time-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer-bar { flex-direction: column; gap: 8px; }
+      .confirmation-card {
+        padding: 24px;
+      }
+      .confirm-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .confirm-row-value {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .progress-label {
+        display: none;
+      }
+      .booking-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+      }
+      .btn-continue, .btn-confirm {
+        width: 100%;
+        justify-content: center;
+      }
+      .btn-back {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating logo -->
+  <a href="home.html" class="floating-logo" id="floatingLogo">ansikt</a>
+
+  <!-- Floating menu button -->
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Fullscreen nav overlay -->
+  <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="nav-overlay-bg">
+      <div class="nav-bg-left"></div>
+      <div class="nav-bg-right"></div>
+    </div>
+    <div class="nav-overlay-content">
+      <nav class="nav-menu-links">
+        <div class="nav-menu-item">
+          <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
+        </div>
+        <div class="nav-menu-item">
+          <a href="about.html"><span class="nav-menu-num">02</span> About</a>
+        </div>
+        <div class="nav-menu-item">
+          <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
+        </div>
+        <div class="nav-menu-item">
+          <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
+        </div>
+      </nav>
+      <aside class="nav-sidebar">
+        <div class="nav-sidebar-tagline">
+          Bespoke beauty<br>treatments —<br>Putney, London
+        </div>
+        <div class="nav-sidebar-contact">
+          <a href="mailto:hello@ansikt.co">hello@ansikt.co</a>
+          <a href="https://instagram.com/ansikt" target="_blank" rel="noopener">@ansikt</a>
+        </div>
+        <a href="book.html" class="nav-sidebar-cta">
+          Book a treatment
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-label reveal s1">Book Online</div>
+    <h1 class="page-header-title reveal s2">Book Your Treatment</h1>
+    <p class="page-header-sub reveal s3">Select a treatment, choose your time, and we'll take care of the rest.</p>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-step active" data-step="0">
+      <div class="progress-circle">01</div>
+      <div class="progress-label">Treatment</div>
+    </div>
+    <div class="progress-line" id="line0"></div>
+    <div class="progress-step" data-step="1">
+      <div class="progress-circle">02</div>
+      <div class="progress-label">Date &amp; Time</div>
+    </div>
+    <div class="progress-line" id="line1"></div>
+    <div class="progress-step" data-step="2">
+      <div class="progress-circle">03</div>
+      <div class="progress-label">Details</div>
+    </div>
+    <div class="progress-line" id="line2"></div>
+    <div class="progress-step" data-step="3">
+      <div class="progress-circle">04</div>
+      <div class="progress-label">Confirm</div>
+    </div>
+  </div>
+
+  <!-- Booking Flow -->
+  <div class="booking-container">
+    <div class="booking-steps-wrapper" id="stepsWrapper">
+
+      <!-- Step 1: Select Treatment -->
+      <div class="booking-step active" id="step0">
+        <div id="treatmentList"></div>
+        <div class="booking-actions">
+          <button class="btn-continue" id="continueStep0" disabled>
+            Continue
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Choose Date & Time -->
+      <div class="booking-step" id="step1">
+        <div class="calendar-section">
+          <div class="calendar-header">
+            <div class="calendar-month" id="calendarMonth"></div>
+            <div class="calendar-nav">
+              <button id="prevMonth" aria-label="Previous month">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button id="nextMonth" aria-label="Next month">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div id="timeSection">
+          <div class="time-section-label">Available Times</div>
+          <div class="time-grid" id="timeGrid">
+            <div class="no-date-message">Select a date to see available times</div>
+          </div>
+        </div>
+
+        <div class="booking-actions">
+          <button class="btn-back" id="backStep1">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0l4-4M3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <button class="btn-continue" id="continueStep1" disabled>
+            Continue
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Your Details -->
+      <div class="booking-step" id="step2">
+        <div class="details-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name</label>
+              <input type="text" class="form-input" id="firstName" placeholder="Jane" autocomplete="given-name">
+              <div class="form-error" id="firstNameError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input type="text" class="form-input" id="lastName" placeholder="Doe" autocomplete="family-name">
+              <div class="form-error" id="lastNameError"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" class="form-input" id="email" placeholder="jane@example.com" autocomplete="email">
+            <div class="form-error" id="emailError"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone</label>
+            <input type="tel" class="form-input" id="phone" placeholder="+44 7700 900000" autocomplete="tel">
+            <div class="form-error" id="phoneError"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="notes">Any notes for your therapist? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">(optional)</span></label>
+            <textarea class="form-input" id="notes" placeholder="Sensitive skin, allergies, preferences..."></textarea>
+          </div>
+        </div>
+
+        <div class="booking-actions">
+          <button class="btn-back" id="backStep2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0l4-4M3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <button class="btn-continue" id="continueStep2" disabled>
+            Continue
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Confirmation -->
+      <div class="booking-step" id="step3">
+        <div class="confirmation-card">
+          <div class="confirm-heading">Your Booking</div>
+          <div class="confirm-rows">
+            <div class="confirm-row">
+              <div class="confirm-row-label">Treatment</div>
+              <div class="confirm-row-value" id="confirmTreatment"></div>
+            </div>
+            <div class="confirm-row">
+              <div class="confirm-row-label">Date</div>
+              <div class="confirm-row-value" id="confirmDate"></div>
+            </div>
+            <div class="confirm-row">
+              <div class="confirm-row-label">Time</div>
+              <div class="confirm-row-value" id="confirmTime"></div>
+            </div>
+            <div class="confirm-row">
+              <div class="confirm-row-label">Duration</div>
+              <div class="confirm-row-value" id="confirmDuration"></div>
+            </div>
+            <div class="confirm-row">
+              <div class="confirm-row-label">Client</div>
+              <div class="confirm-row-value" id="confirmClient"></div>
+            </div>
+            <div class="confirm-row">
+              <div class="confirm-row-label">Price</div>
+              <div class="confirm-row-value price" id="confirmPrice"></div>
+            </div>
+          </div>
+        </div>
+        <p class="confirm-policy">By booking you agree to our cancellation policy.<br>24 hours notice is required for cancellations and rescheduling.</p>
+
+        <div class="booking-actions">
+          <button class="btn-back" id="backStep3">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0l4-4M3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <button class="btn-confirm" id="confirmBooking">
+            Confirm Booking
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Success State -->
+    <div class="booking-success" id="bookingSuccess">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M8 16.5l5.5 5.5L24 11" stroke="#2C2420" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 class="success-title">You're booked</h2>
+      <p class="success-text">We've reserved your appointment. A confirmation email is on its way.</p>
+      <p class="success-email" id="successEmail"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">ansikt</div>
+        <div class="footer-brand-sub">b e a u t y</div>
+      </div>
+      <div>
+        <div class="footer-heading">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="treatments.html">Treatments</a></li>
+          <li><a href="book.html">Book</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Contact</div>
+        <div class="footer-contact">
+          @ansikt.uk<br>
+          Putney, London<br>
+          By appointment only
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>&copy; 2026 Ansikt Beauty</span>
+      <span>All rights reserved</span>
+    </div>
+  </footer>
+
+  <script>
+    // =================================================================
+    // NAV (shared)
+    // =================================================================
+    const menuBtn = document.getElementById('menuBtn');
+    const navOverlay = document.getElementById('navOverlay');
+    const floatingLogo = document.getElementById('floatingLogo');
+    let menuOpen = false;
+
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.classList.toggle('open', menuOpen);
+      navOverlay.classList.toggle('open', menuOpen);
+      floatingLogo.classList.toggle('inverted', menuOpen);
+      menuBtn.setAttribute('aria-expanded', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    });
+
+    navOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        menuBtn.classList.remove('open');
+        navOverlay.classList.remove('open');
+        floatingLogo.classList.remove('inverted');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        menuBtn.click();
+      }
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // =================================================================
+    // BOOKING STATE
+    // =================================================================
+    const state = {
+      currentStep: 0,
+      selectedTreatment: null,
+      selectedDate: null,
+      selectedTime: null,
+      calendarDate: new Date(),
+      client: { firstName: '', lastName: '', email: '', phone: '', notes: '' }
+    };
+
+    // =================================================================
+    // STEP NAVIGATION
+    // =================================================================
+    const stepsWrapper = document.getElementById('stepsWrapper');
+    const steps = document.querySelectorAll('.booking-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const progressLines = document.querySelectorAll('.progress-line');
+
+    function goToStep(index) {
+      const prev = state.currentStep;
+      state.currentStep = index;
+
+      // Slide wrapper
+      stepsWrapper.style.transform = `translateX(-${index * 100}%)`;
+
+      // Activate correct step panel
+      steps.forEach((step, i) => {
+        step.classList.toggle('active', i === index);
+      });
+
+      // Update progress indicator
+      progressSteps.forEach((ps, i) => {
+        ps.classList.remove('active', 'completed');
+        if (i < index) ps.classList.add('completed');
+        if (i === index) ps.classList.add('active');
+      });
+      progressLines.forEach((line, i) => {
+        line.classList.toggle('filled', i < index);
+      });
+
+      // Scroll to top of booking area smoothly
+      window.scrollTo({ top: document.querySelector('.progress-bar').offsetTop - 100, behavior: 'smooth' });
+
+      // Populate confirmation if going to step 4
+      if (index === 3) populateConfirmation();
+    }
+
+    // Continue buttons
+    document.getElementById('continueStep0').addEventListener('click', () => goToStep(1));
+    document.getElementById('continueStep1').addEventListener('click', () => goToStep(2));
+    document.getElementById('continueStep2').addEventListener('click', () => {
+      if (validateForm()) goToStep(3);
+    });
+
+    // Back buttons
+    document.getElementById('backStep1').addEventListener('click', () => goToStep(0));
+    document.getElementById('backStep2').addEventListener('click', () => goToStep(1));
+    document.getElementById('backStep3').addEventListener('click', () => goToStep(2));
+
+    // =================================================================
+    // STEP 1: TREATMENT SELECTION
+    // =================================================================
+    function renderTreatments(services) {
+      const container = document.getElementById('treatmentList');
+      const categories = {};
+      services.forEach(s => {
+        if (!categories[s.category]) categories[s.category] = [];
+        categories[s.category].push(s);
+      });
+
+      let html = '';
+      for (const [cat, items] of Object.entries(categories)) {
+        html += `<div class="treatment-category">`;
+        html += `<div class="category-label">${cat}</div>`;
+        html += `<div class="treatment-cards">`;
+        items.forEach(item => {
+          html += `
+            <div class="treatment-card" data-id="${item.id}" tabindex="0" role="radio" aria-checked="false">
+              <div class="treatment-card-info">
+                <div class="treatment-card-name">${item.name}</div>
+                <div class="treatment-card-desc">${item.description}</div>
+              </div>
+              <div class="treatment-card-meta">
+                <div class="treatment-card-price">&pound;${item.price}</div>
+                <div class="treatment-card-duration">${item.duration} mins</div>
+              </div>
+            </div>`;
+        });
+        html += `</div></div>`;
+      }
+      container.innerHTML = html;
+
+      // Attach click handlers
+      container.querySelectorAll('.treatment-card').forEach(card => {
+        card.addEventListener('click', () => selectTreatment(card));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectTreatment(card);
+          }
+        });
+      });
+    }
+
+    function selectTreatment(card) {
+      document.querySelectorAll('.treatment-card').forEach(c => {
+        c.classList.remove('selected');
+        c.setAttribute('aria-checked', 'false');
+      });
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+      const id = card.dataset.id;
+      state.selectedTreatment = mockServices.find(s => s.id === id);
+      document.getElementById('continueStep0').disabled = false;
+    }
+
+    // =================================================================
+    // STEP 2: CALENDAR
+    // =================================================================
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+    function renderCalendar() {
+      const year = state.calendarDate.getFullYear();
+      const month = state.calendarDate.getMonth();
+      const today = new Date();
+
+      document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+
+      // Disable prev month if it's the current month
+      const prevBtn = document.getElementById('prevMonth');
+      prevBtn.disabled = (year === today.getFullYear() && month <= today.getMonth());
+
+      let html = '';
+      dayNames.forEach(d => {
+        html += `<div class="calendar-dow">${d}</div>`;
+      });
+
+      const firstDay = new Date(year, month, 1);
+      // getDay() returns 0 for Sunday; we want Monday=0
+      let startDay = firstDay.getDay() - 1;
+      if (startDay < 0) startDay = 6;
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Empty cells before the first day
+      for (let i = 0; i < startDay; i++) {
+        html += `<div class="calendar-day empty"></div>`;
+      }
+
+      // Generate available dates from mock (async concept but sync for mock)
+      const availableDates = mockAvailableDates(state.selectedTreatment?.id, year, month);
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dateStr = formatDateISO(date);
+        const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isAvailable = availableDates.includes(dateStr);
+        const isToday = date.toDateString() === today.toDateString();
+        const isSelected = state.selectedDate === dateStr;
+
+        let cls = 'calendar-day';
+        if (isPast || !isAvailable) cls += ' disabled';
+        if (isToday) cls += ' today';
+        if (isSelected) cls += ' selected';
+
+        html += `<button class="${cls}" data-date="${dateStr}" ${(isPast || !isAvailable) ? 'disabled' : ''}>${day}</button>`;
+      }
+
+      document.getElementById('calendarGrid').innerHTML = html;
+
+      // Attach click handlers
+      document.querySelectorAll('.calendar-day:not(.disabled):not(.empty)').forEach(btn => {
+        btn.addEventListener('click', () => selectDate(btn.dataset.date));
+      });
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      state.calendarDate.setMonth(state.calendarDate.getMonth() - 1);
+      renderCalendar();
+    });
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      state.calendarDate.setMonth(state.calendarDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    function selectDate(dateStr) {
+      state.selectedDate = dateStr;
+      state.selectedTime = null;
+      document.getElementById('continueStep1').disabled = true;
+      renderCalendar();
+      renderTimeSlots();
+    }
+
+    // =================================================================
+    // STEP 2: TIME SLOTS
+    // =================================================================
+    function renderTimeSlots() {
+      const grid = document.getElementById('timeGrid');
+      if (!state.selectedDate) {
+        grid.innerHTML = '<div class="no-date-message">Select a date to see available times</div>';
+        return;
+      }
+
+      const slots = mockAvailableSlots(state.selectedTreatment?.id, state.selectedDate);
+      let html = '';
+      slots.forEach(slot => {
+        const isSelected = state.selectedTime === slot.time;
+        let cls = 'time-slot';
+        if (isSelected) cls += ' selected';
+        if (!slot.available) cls += ' disabled';
+        html += `<button class="${cls}" data-time="${slot.time}" ${!slot.available ? 'disabled' : ''}>${slot.time}</button>`;
+      });
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('.time-slot:not(.disabled)').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.selectedTime = btn.dataset.time;
+          renderTimeSlots();
+          document.getElementById('continueStep1').disabled = false;
+        });
+      });
+    }
+
+    // =================================================================
+    // STEP 3: FORM VALIDATION
+    // =================================================================
+    function validateForm() {
+      let valid = true;
+
+      const first = document.getElementById('firstName').value.trim();
+      const last = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      clearErrors();
+
+      if (!first) { showError('firstNameError', 'First name is required'); valid = false; }
+      if (!last) { showError('lastNameError', 'Last name is required'); valid = false; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('emailError', 'Please enter a valid email'); valid = false;
+      }
+      if (!phone || phone.length < 6) { showError('phoneError', 'Please enter a valid phone number'); valid = false; }
+
+      if (valid) {
+        state.client = {
+          firstName: first,
+          lastName: last,
+          email: email,
+          phone: phone,
+          notes: document.getElementById('notes').value.trim()
+        };
+      }
+      return valid;
+    }
+
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.previousElementSibling.classList.add('error');
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.form-error').forEach(e => e.textContent = '');
+      document.querySelectorAll('.form-input.error').forEach(e => e.classList.remove('error'));
+    }
+
+    // Enable continue when required fields filled
+    ['firstName', 'lastName', 'email', 'phone'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        const filled = ['firstName','lastName','email','phone'].every(
+          fid => document.getElementById(fid).value.trim().length > 0
+        );
+        document.getElementById('continueStep2').disabled = !filled;
+      });
+    });
+
+    // Clear error styling on focus
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('focus', () => {
+        input.classList.remove('error');
+        const errorEl = input.parentElement.querySelector('.form-error');
+        if (errorEl) errorEl.textContent = '';
+      });
+    });
+
+    // =================================================================
+    // STEP 4: CONFIRMATION
+    // =================================================================
+    function populateConfirmation() {
+      const t = state.selectedTreatment;
+      document.getElementById('confirmTreatment').textContent = t ? t.name : '';
+      document.getElementById('confirmDate').textContent = state.selectedDate ? formatDateReadable(state.selectedDate) : '';
+      document.getElementById('confirmTime').textContent = state.selectedTime || '';
+      document.getElementById('confirmDuration').textContent = t ? `${t.duration} minutes` : '';
+      document.getElementById('confirmClient').textContent = `${state.client.firstName} ${state.client.lastName}`;
+      document.getElementById('confirmPrice').textContent = t ? `\u00A3${t.price}` : '';
+    }
+
+    // Confirm Booking
+    document.getElementById('confirmBooking').addEventListener('click', async () => {
+      const btn = document.getElementById('confirmBooking');
+      btn.disabled = true;
+      btn.textContent = 'Booking...';
+
+      // Call the stub API
+      const result = await SimplyBookAPI.createBooking({
+        serviceId: state.selectedTreatment.id,
+        date: state.selectedDate,
+        time: state.selectedTime,
+        client: state.client
+      });
+
+      // Show success
+      document.getElementById('stepsWrapper').style.display = 'none';
+      document.querySelector('.progress-bar').style.display = 'none';
+      const success = document.getElementById('bookingSuccess');
+      success.classList.add('visible');
+      document.getElementById('successEmail').textContent = `Confirmation sent to ${state.client.email}`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // =================================================================
+    // UTILITY FUNCTIONS
+    // =================================================================
+    function formatDateISO(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatDateReadable(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      return `${days[date.getDay()]}, ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    // ============================================
+    // SIMPLYBOOK.ME API INTEGRATION
+    // ============================================
+    // API Base: https://user-api-v2.simplybook.me
+    // Auth: JSON-RPC with company login
+    // Docs: https://simplybook.me/en/api/developer-api
+    //
+    // When ready to go live, replace the mock functions below
+    // with real API calls. The UI code above calls these through
+    // the SimplyBookAPI namespace and expects Promises.
+    // ============================================
+
+    const SimplyBookAPI = {
+      // ------------------------------------------
+      // getServices()
+      // Returns all available services/treatments
+      // Real API: POST /admin/getEventList
+      // ------------------------------------------
+      async getServices() {
+        // Simulated network delay
+        await delay(300);
+        return mockServices;
+      },
+
+      // ------------------------------------------
+      // getAvailableDates(serviceId)
+      // Returns available dates for a given month
+      // Real API: POST /admin/getStartDateMatrix
+      // ------------------------------------------
+      async getAvailableDates(serviceId, year, month) {
+        await delay(200);
+        return mockAvailableDates(serviceId, year, month);
+      },
+
+      // ------------------------------------------
+      // getAvailableSlots(serviceId, date)
+      // Returns time slots for a specific date
+      // Real API: POST /admin/getStartTimeMatrix
+      // ------------------------------------------
+      async getAvailableSlots(serviceId, date) {
+        await delay(200);
+        return mockAvailableSlots(serviceId, date);
+      },
+
+      // ------------------------------------------
+      // createBooking(bookingData)
+      // Creates a new booking
+      // Real API: POST /admin/book
+      // bookingData: { serviceId, date, time, client }
+      // ------------------------------------------
+      async createBooking(bookingData) {
+        await delay(800);
+        // Return a mock confirmation
+        return {
+          success: true,
+          bookingId: 'ANS-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+          message: 'Booking confirmed'
+        };
+      }
+    };
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ============================================
+    // MOCK DATA
+    // ============================================
+
+    const mockServices = [
+      // Facials
+      {
+        id: 'facial-luxury',
+        category: 'Facials',
+        name: 'Ansikt Luxury Facial',
+        description: 'Targeting fine lines and dehydration with a hand and arm massage. Powered by Alpha H.',
+        duration: 50,
+        price: 50
+      },
+      {
+        id: 'facial-express',
+        category: 'Facials',
+        name: 'Express Glow Facial',
+        description: 'A 30-minute pick-me-up for radiant, refreshed skin. Perfect for a lunchtime boost.',
+        duration: 30,
+        price: 35
+      },
+      {
+        id: 'facial-dermaplaning',
+        category: 'Facials',
+        name: 'Dermaplaning Reform',
+        description: 'Exfoliation that buffs and tones, combined with LED light therapy for youthful skin.',
+        duration: 50,
+        price: 50
+      },
+      {
+        id: 'facial-glass',
+        category: 'Facials',
+        name: 'Glass Skin Teen Facial',
+        description: 'Korean-inspired facial for young skin. Tackles hormonal changes, acne, and irritation.',
+        duration: 25,
+        price: 30
+      },
+      // Brows
+      {
+        id: 'brow-lamination',
+        category: 'Brows',
+        name: 'Brow Lamination',
+        description: 'Sets brows into a fluffy, long-lasting shape that beautifully frames the eyes.',
+        duration: 50,
+        price: 42
+      },
+      {
+        id: 'brow-shape',
+        category: 'Brows',
+        name: 'Brow Shape & Tint',
+        description: 'Precision threading and custom tint for naturally defined, polished brows.',
+        duration: 30,
+        price: 28
+      },
+      {
+        id: 'brow-lamination-tint',
+        category: 'Brows',
+        name: 'Brow Lamination & Tint',
+        description: 'The ultimate brow transformation: lamination combined with a custom hybrid tint.',
+        duration: 60,
+        price: 52
+      },
+      // Lashes
+      {
+        id: 'lash-lift',
+        category: 'Lashes',
+        name: 'Lash Lift & Tint',
+        description: 'Opens and lifts the eye with a natural curl and rich tint. Lasts 6-8 weeks.',
+        duration: 50,
+        price: 45
+      },
+      {
+        id: 'lash-tint',
+        category: 'Lashes',
+        name: 'Lash Tint',
+        description: 'A quick lash-defining tint for darker, more visible lashes without mascara.',
+        duration: 15,
+        price: 15
+      },
+      // Packages
+      {
+        id: 'pkg-bridal',
+        category: 'Packages',
+        name: 'Bridal Glow Package',
+        description: 'Luxury facial, brow lamination & tint, and lash lift. The complete pre-wedding prep.',
+        duration: 120,
+        price: 130
+      },
+      {
+        id: 'pkg-pamper',
+        category: 'Packages',
+        name: 'Pamper Evening',
+        description: 'Express facial with brow shape and lash tint. Ideal for a girls\u2019 night treat.',
+        duration: 75,
+        price: 70
+      }
+    ];
+
+    // Generate available dates: weekdays for the given month that are not in the past
+    function mockAvailableDates(serviceId, year, month) {
+      const dates = [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const day = date.getDay();
+        // Available: Tue-Sat (day 2-6), not in the past
+        if (day >= 2 && day <= 6 && date >= today) {
+          dates.push(formatDateISO(date));
+        }
+      }
+      return dates;
+    }
+
+    // Generate time slots for a given date
+    function mockAvailableSlots(serviceId, dateStr) {
+      const slots = [];
+      // Generate slots from 9:00 to 18:00
+      for (let h = 9; h < 18; h++) {
+        for (let m = 0; m < 60; m += 30) {
+          const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+          // Randomly mark some as unavailable (seeded by date for consistency)
+          const seed = dateStr.split('-').reduce((a, b) => a + parseInt(b), 0) + h * 60 + m;
+          const available = (seed * 7 + 13) % 5 !== 0; // ~20% unavailable
+          slots.push({ time, available });
+        }
+      }
+      return slots;
+    }
+
+    // ============================================
+    // INITIALISE
+    // ============================================
+    renderTreatments(mockServices);
+    renderCalendar();
+  </script>
+</body>
+</html>

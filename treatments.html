@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ansikt — Bespoke Beauty</title>
+  <title>Ansikt — Treatments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -147,8 +147,6 @@
       pointer-events: none;
       overflow: hidden;
     }
-
-    /* Two-panel background */
     .nav-overlay-bg {
       position: absolute;
       inset: 0;
@@ -170,8 +168,6 @@
     .nav-overlay.open .nav-bg-right {
       transform: translateY(0);
     }
-
-    /* Content */
     .nav-overlay-content {
       position: absolute;
       inset: 0;
@@ -189,8 +185,6 @@
     .nav-overlay.open {
       pointer-events: auto;
     }
-
-    /* Links column */
     .nav-menu-links {
       display: flex;
       flex-direction: column;
@@ -220,7 +214,6 @@
     .nav-overlay.open .nav-menu-item:nth-child(2) a { transition-delay: 0.38s; }
     .nav-overlay.open .nav-menu-item:nth-child(3) a { transition-delay: 0.46s; }
     .nav-overlay.open .nav-menu-item:nth-child(4) a { transition-delay: 0.54s; }
-
     .nav-menu-item a:hover {
       color: var(--olive);
     }
@@ -231,8 +224,6 @@
       letter-spacing: 0.05em;
       opacity: 0.7;
     }
-
-    /* Right column — editorial detail */
     .nav-sidebar {
       display: flex;
       flex-direction: column;
@@ -347,140 +338,108 @@
     }
 
     /* =================================================================
-       HERO
+       PAGE HERO
        ================================================================= */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .hero-content {
+    .page-hero {
       background: var(--olive);
+      min-height: 60vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: clamp(48px, 8vw, 96px);
+      text-align: center;
+      padding: clamp(120px, 16vh, 180px) clamp(24px, 5vw, 64px) clamp(80px, 10vh, 120px);
       position: relative;
       overflow: hidden;
     }
-    .hero-number {
+    .page-hero-number {
       font-family: var(--mono);
       font-weight: 700;
-      font-size: clamp(100px, 15vw, 180px);
-      color: rgba(44, 36, 32, 0.07);
+      font-size: clamp(120px, 20vw, 260px);
+      color: rgba(44, 36, 32, 0.05);
       position: absolute;
-      top: -20px; left: -10px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       line-height: 1;
       pointer-events: none;
       user-select: none;
     }
-    .hero-brand {
+    .page-hero-title {
       font-family: var(--display);
-      font-size: clamp(44px, 5vw, 64px);
+      font-size: clamp(52px, 7vw, 90px);
       font-weight: 400;
       color: var(--charcoal);
       line-height: 1.05;
       letter-spacing: -0.02em;
-      margin-bottom: 4px;
+      margin-bottom: 16px;
       position: relative;
     }
-    .hero-sub {
-      font-family: var(--body);
-      font-weight: 300;
-      font-size: 15px;
-      letter-spacing: 0.22em;
-      color: var(--charcoal);
-      opacity: 0.5;
-      margin-bottom: clamp(24px, 4vw, 48px);
-    }
-    .hero-tagline {
-      font-family: var(--body);
-      font-weight: 300;
-      font-size: clamp(18px, 2.2vw, 22px);
-      color: var(--charcoal);
-      line-height: 1.5;
-      max-width: 400px;
-      margin-bottom: clamp(32px, 5vw, 48px);
-    }
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    .btn-primary {
-      font-size: 14px;
-      font-weight: 600;
-      background: var(--charcoal);
-      color: var(--olive);
-      padding: 14px 36px;
-      border-radius: 6px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(44,36,32,0.25);
-    }
-    .hero-location {
+    .page-hero-sub {
       font-family: var(--mono);
+      font-size: clamp(14px, 1.5vw, 17px);
       font-style: italic;
-      font-size: 13px;
       color: var(--charcoal);
-      opacity: 0.45;
-    }
-    .hero-image {
+      opacity: 0.55;
+      letter-spacing: 0.04em;
       position: relative;
-      overflow: hidden;
     }
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      will-change: transform;
-      transition: transform 0.1s linear;
+
+    /* Hero entrance */
+    .page-hero > * {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .page-hero > *:nth-child(1) { opacity: 0; animation: heroNumberIn 1.2s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards; transform: none; }
+    .page-hero > *:nth-child(2) { animation-delay: 0.3s; }
+    .page-hero > *:nth-child(3) { animation-delay: 0.5s; }
+    @keyframes heroIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroNumberIn {
+      to { opacity: 1; }
     }
 
     /* =================================================================
-       PHILOSOPHY
+       SECTION HEADER
        ================================================================= */
-    .philosophy {
-      padding: clamp(80px, 12vw, 160px) clamp(24px, 5vw, 64px);
-      text-align: center;
-      max-width: 720px;
+    .section-header {
+      padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 64px) clamp(32px, 4vw, 48px);
+      max-width: 1200px;
       margin: 0 auto;
+      position: relative;
     }
-    .philosophy-label {
+    .section-number {
       font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: clamp(64px, 10vw, 120px);
+      color: rgba(44, 36, 32, 0.06);
+      line-height: 1;
+      margin-bottom: -8px;
     }
-    .philosophy-heading {
+    .section-title {
       font-family: var(--display);
-      font-size: clamp(28px, 3.5vw, 40px);
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 400;
       color: var(--ink-1);
-      line-height: 1.3;
-      margin-bottom: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
     }
-    .philosophy-body {
-      font-weight: 300;
-      font-size: 17px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      max-width: 560px;
-      margin: 0 auto;
+    .section-rule {
+      width: 60px;
+      height: 2px;
+      background: var(--olive);
+      margin-top: 20px;
     }
 
     /* =================================================================
-       TREATMENTS
+       TREATMENT CARDS (split-screen)
        ================================================================= */
     .treatment-block {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 520px;
+      min-height: 480px;
     }
     .treatment-content {
       display: flex;
@@ -592,6 +551,15 @@
     .t-linen .treatment-link { color: var(--accent); }
     .t-linen .btn-treatment { background: var(--olive); color: var(--charcoal); }
 
+    .t-plaster .treatment-content { background: var(--plaster); }
+    .t-plaster .treatment-number { color: rgba(44,36,32,0.06); top: -10px; left: -5px; }
+    .t-plaster .treatment-label { color: var(--ink-2); }
+    .t-plaster .treatment-title { color: var(--charcoal); }
+    .t-plaster .treatment-desc { color: var(--ink-1); opacity: 0.75; }
+    .t-plaster .treatment-price { color: var(--ink-2); }
+    .t-plaster .treatment-link { color: var(--charcoal); }
+    .t-plaster .btn-treatment { background: var(--charcoal); color: var(--plaster); }
+
     .btn-treatment {
       display: inline-block;
       font-size: 13px;
@@ -607,164 +575,116 @@
     }
 
     /* =================================================================
-       GALLERY
+       PACKAGES
        ================================================================= */
-    .gallery {
-      padding: clamp(48px, 8vw, 100px) clamp(24px, 5vw, 64px);
-    }
-    .gallery-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 32px;
-    }
-    .gallery-title {
-      font-family: var(--display);
-      font-size: clamp(28px, 3vw, 36px);
-      font-weight: 400;
-      color: var(--ink-1);
-    }
-    .gallery-link {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap 0.3s ease;
-    }
-    .gallery-link:hover { gap: 12px; }
-    .gallery-grid {
+    .packages-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto auto;
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto clamp(48px, 6vw, 80px);
+      padding: 0 clamp(24px, 5vw, 64px);
     }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .gallery-item:hover img { transform: scale(1.04); }
-    .gallery-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(44,36,32,0.5);
-      display: flex;
-      align-items: flex-end;
-      padding: 24px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay-text {
-      font-family: var(--display);
-      font-size: 20px;
-      color: var(--linen);
-    }
-    .g1 { grid-column: 1 / 6; grid-row: 1; aspect-ratio: 4/3; }
-    .g2 { grid-column: 6 / 9; grid-row: 1; aspect-ratio: 3/4; }
-    .g3 { grid-column: 9 / 13; grid-row: 1; aspect-ratio: 3/4; }
-    .g4 {
-      grid-column: 1 / 5;
-      grid-row: 2;
-      background: var(--olive);
+    .package-card {
+      padding: clamp(40px, 5vw, 64px);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 32px;
-      border-radius: 8px;
-      aspect-ratio: auto;
+      position: relative;
+      overflow: hidden;
     }
-    .g4-quote {
-      font-family: var(--display);
-      font-size: 20px;
-      color: var(--charcoal);
-      line-height: 1.4;
-      margin-bottom: 12px;
+    .package-card:nth-child(1) {
+      background: var(--charcoal);
+      border-radius: 12px 0 0 12px;
     }
-    .g4-attr {
+    .package-card:nth-child(2) {
+      background: var(--olive);
+      border-radius: 0 12px 12px 0;
+    }
+    .package-number {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: clamp(60px, 8vw, 100px);
+      line-height: 1;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      top: -10px;
+      right: -5px;
+    }
+    .package-card:nth-child(1) .package-number { color: rgba(245,240,232,0.05); }
+    .package-card:nth-child(2) .package-number { color: rgba(44,36,32,0.07); }
+    .package-label {
       font-family: var(--mono);
       font-size: 12px;
-      font-style: italic;
-      color: var(--charcoal);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
       opacity: 0.5;
     }
-    .g5 { grid-column: 5 / 13; grid-row: 2; aspect-ratio: 16/7; }
+    .package-card:nth-child(1) .package-label { color: var(--plaster); }
+    .package-card:nth-child(2) .package-label { color: var(--charcoal); }
+    .package-title {
+      font-family: var(--display);
+      font-size: clamp(24px, 2.5vw, 32px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .package-card:nth-child(1) .package-title { color: var(--linen); }
+    .package-card:nth-child(2) .package-title { color: var(--charcoal); }
+    .package-includes {
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 360px;
+    }
+    .package-card:nth-child(1) .package-includes { color: var(--plaster); opacity: 0.8; }
+    .package-card:nth-child(2) .package-includes { color: var(--charcoal); opacity: 0.7; }
+    .package-price {
+      font-family: var(--mono);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .package-card:nth-child(1) .package-price { color: var(--blush); }
+    .package-card:nth-child(2) .package-price { color: var(--charcoal); opacity: 0.6; }
+    .package-card:nth-child(1) .btn-treatment { background: var(--olive); color: var(--charcoal); }
+    .package-card:nth-child(2) .btn-treatment { background: var(--charcoal); color: var(--olive); }
 
     /* =================================================================
-       TESTIMONIAL
+       CONSULTATION CTA
        ================================================================= */
-    .testimonial {
-      background: var(--blush);
+    .consult-cta {
+      background: var(--charcoal);
       padding: clamp(80px, 10vw, 140px) clamp(24px, 5vw, 64px);
       text-align: center;
     }
-    .testimonial-quote {
-      font-family: var(--display);
-      font-size: clamp(24px, 3.5vw, 40px);
-      font-weight: 400;
-      color: var(--charcoal);
-      line-height: 1.35;
-      max-width: 700px;
-      margin: 0 auto 24px;
-    }
-    .testimonial-attr {
+    .consult-label {
       font-family: var(--mono);
-      font-size: 14px;
-      font-style: italic;
-      color: var(--ink-2);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 20px;
+      opacity: 0.7;
     }
-
-    /* =================================================================
-       CTA
-       ================================================================= */
-    .cta {
-      position: relative;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .cta-bg {
-      position: absolute;
-      inset: 0;
-    }
-    .cta-bg img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .cta-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(44,36,32,0.55), rgba(44,36,32,0.75));
-    }
-    .cta-content {
-      position: relative;
-      z-index: 1;
-    }
-    .cta-heading {
+    .consult-heading {
       font-family: var(--display);
-      font-size: clamp(32px, 4vw, 48px);
+      font-size: clamp(32px, 4vw, 52px);
       font-weight: 400;
       color: var(--linen);
-      margin-bottom: 12px;
+      line-height: 1.2;
+      margin-bottom: 16px;
     }
-    .cta-sub {
+    .consult-body {
       font-weight: 300;
       font-size: 17px;
       color: var(--plaster);
-      margin-bottom: 32px;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
     }
     .btn-cta {
       display: inline-block;
@@ -869,33 +789,6 @@
     .s4 { transition-delay: 0.4s; }
     .s5 { transition-delay: 0.5s; }
 
-    /* Hero entrance */
-    .hero-content > * {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: heroIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    .hero-content > *:nth-child(1) { animation-delay: 0.2s; }
-    .hero-content > *:nth-child(2) { animation-delay: 0.35s; }
-    .hero-content > *:nth-child(3) { animation-delay: 0.45s; }
-    .hero-content > *:nth-child(4) { animation-delay: 0.55s; }
-    .hero-content > *:nth-child(5) { animation-delay: 0.65s; }
-    .hero-content > *:nth-child(6) { animation-delay: 0.75s; }
-    .hero-content > .hero-number { opacity: 0; animation: heroNumberIn 1.2s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards; transform: none; }
-    @keyframes heroIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes heroNumberIn {
-      to { opacity: 1; }
-    }
-    .hero-image img {
-      animation: heroImgIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      transform: scale(1.08);
-    }
-    @keyframes heroImgIn {
-      to { transform: scale(1); }
-    }
-
     /* =================================================================
        REDUCED MOTION
        ================================================================= */
@@ -905,24 +798,13 @@
         transition-duration: 0.01ms !important;
       }
       .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
-      .hero-content > * { opacity: 1; transform: none; }
-      .hero-image img { transform: none; }
+      .page-hero > * { opacity: 1; transform: none; }
     }
 
     /* =================================================================
        RESPONSIVE
        ================================================================= */
     @media (max-width: 768px) {
-      /* nav handled by floating menu */
-
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .hero-image { height: 55vh; order: -1; }
-      .hero-content { padding: 48px 24px 64px; }
-      .hero-number { font-size: 80px; }
-
       .treatment-block {
         grid-template-columns: 1fr;
       }
@@ -930,16 +812,20 @@
       .treatment-content { padding: 40px 24px; }
       .treatment-number { font-size: 64px; }
 
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
+      .packages-grid {
+        grid-template-columns: 1fr;
+        padding: 0 clamp(24px, 5vw, 64px);
       }
-      .g1, .g2, .g3, .g4, .g5 {
-        grid-column: auto;
-        grid-row: auto;
-        aspect-ratio: 1;
+      .package-card:nth-child(1) {
+        border-radius: 12px 12px 0 0;
       }
-      .g5 { grid-column: 1 / -1; aspect-ratio: 16/9; }
+      .package-card:nth-child(2) {
+        border-radius: 0 0 12px 12px;
+      }
+
+      .section-header {
+        padding: clamp(60px, 8vw, 80px) 24px clamp(24px, 3vw, 32px);
+      }
 
       .footer-grid {
         grid-template-columns: 1fr;
@@ -982,7 +868,7 @@
       </nav>
       <aside class="nav-sidebar">
         <div class="nav-sidebar-tagline">
-          Bespoke beauty<br>treatments —<br>San Francisco
+          Bespoke beauty<br>treatments —<br>Putney, London
         </div>
         <div class="nav-sidebar-contact">
           <a href="mailto:hello@ansikt.co">hello@ansikt.co</a>
@@ -996,151 +882,256 @@
     </div>
   </div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-number" aria-hidden="true">0.01</div>
-      <div class="hero-brand">ansikt</div>
-      <div class="hero-sub">b e a u t y</div>
-      <p class="hero-tagline">Bespoke brow and facial treatments in a calm, considered space. Every visit is tailored to you.</p>
-      <div class="hero-actions">
-        <a href="treatments.html" class="btn-primary">Explore Treatments</a>
-      </div>
-      <div class="hero-location">Putney, London &middot; by appointment</div>
-    </div>
-    <div class="hero-image">
-      <img src="assets/photography/portrait-editorial-2.jpg" alt="Editorial beauty portrait — natural skin, warm lighting" id="heroImg">
-    </div>
+  <!-- ===============================================================
+       HERO
+       =============================================================== -->
+  <section class="page-hero">
+    <div class="page-hero-number" aria-hidden="true">Tx</div>
+    <h1 class="page-hero-title">Treatments</h1>
+    <p class="page-hero-sub">Bespoke beauty, tailored to you</p>
   </section>
 
-  <!-- Philosophy -->
-  <section class="philosophy">
-    <div class="philosophy-label reveal s1">About Ansikt</div>
-    <h2 class="philosophy-heading reveal s2">The Norwegian word for face. A philosophy of natural beauty enhanced, never masked.</h2>
-    <p class="philosophy-body reveal s3">We believe in warm, considered spaces and treatments that work with your skin's natural beauty. Every detail in our studio — from the bare plaster walls to the products we choose — reflects a commitment to authenticity and care.</p>
-  </section>
+  <!-- ===============================================================
+       0.01 — FACIALS
+       =============================================================== -->
+  <div class="section-header">
+    <div class="section-number reveal s1" aria-hidden="true">0.01</div>
+    <h2 class="section-title reveal s2">Facials</h2>
+    <div class="section-rule reveal s3"></div>
+  </div>
 
-  <!-- Treatment 1: Ansikt Luxury Facial — olive / image right -->
+  <!-- Ansikt Luxury Facial — olive, image right -->
   <div class="treatment-block t-olive">
     <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">0.01</div>
+      <div class="treatment-number" aria-hidden="true">01</div>
       <div class="treatment-label reveal-left s1">Signature Facial</div>
       <h3 class="treatment-title reveal-left s2">Ansikt Luxury Facial</h3>
       <p class="treatment-desc reveal-left s3">Targeting fine lines and dehydration whilst improving skin elasticity and complexion, beautifully complemented with a hand and arm massage. Powered by Alpha H.</p>
       <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
       <div class="reveal-left s5">
         <a href="book.html" class="btn-treatment">Book Now</a>
-        <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
     <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-2.jpg" alt="Luxury facial treatment — glowing skin close-up">
+      <img src="assets/photography/portrait-skin-2.jpg" alt="Luxury facial treatment with glowing skin result" loading="lazy">
     </div>
   </div>
 
-  <!-- Treatment 2: Brow Lamination — image left / charcoal right -->
+  <!-- Dermaplaning Reform — charcoal, image left -->
   <div class="treatment-block t-charcoal">
     <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-1.jpg" alt="Editorial portrait — natural brows and skin">
+      <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning skin renewal treatment" loading="lazy">
     </div>
     <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">0.02</div>
+      <div class="treatment-number" aria-hidden="true">02</div>
+      <div class="treatment-label reveal-right s1">Skin Renewal</div>
+      <h3 class="treatment-title reveal-right s2">Dermaplaning Reform</h3>
+      <p class="treatment-desc reveal-right s3">A transformative exfoliation treatment that buffs and tones the skin, leaving an immaculate foundation that appears youthful and flawless. Combined with LED light therapy.</p>
+      <div class="treatment-price reveal-right s4">50 mins &nbsp;|&nbsp; &pound;50</div>
+      <div class="reveal-right s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Microdermabrasion — blush, image right -->
+  <div class="treatment-block t-blush">
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">03</div>
+      <div class="treatment-label reveal-left s1">Resurfacing</div>
+      <h3 class="treatment-title reveal-left s2">Microdermabrasion</h3>
+      <p class="treatment-desc reveal-left s3">Crystal-free resurfacing that gently removes the outermost layer of dead skin cells, revealing a smoother, brighter complexion. Stimulates collagen production and improves skin texture.</p>
+      <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
+      <div class="reveal-left s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
+      </div>
+    </div>
+    <div class="treatment-img">
+      <img src="assets/photography/portrait-skin-4.jpg" alt="Microdermabrasion skin resurfacing" loading="lazy">
+    </div>
+  </div>
+
+  <!-- LED Light Therapy — linen, image left -->
+  <div class="treatment-block t-linen">
+    <div class="treatment-img">
+      <img src="assets/photography/stock-beauty-2.jpg" alt="LED light therapy collagen stimulation" loading="lazy">
+    </div>
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">04</div>
+      <div class="treatment-label reveal-right s1">Light Therapy</div>
+      <h3 class="treatment-title reveal-right s2">LED Light Therapy</h3>
+      <p class="treatment-desc reveal-right s3">Targeted light wavelengths stimulate collagen production and accelerate skin repair. A non-invasive treatment that reduces inflammation and promotes a clear, even-toned complexion.</p>
+      <div class="treatment-price reveal-right s4">30 mins &nbsp;|&nbsp; &pound;30</div>
+      <div class="reveal-right s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glass Skin — olive, image right -->
+  <div class="treatment-block t-olive">
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">05</div>
+      <div class="treatment-label reveal-left s1">Teen Facial</div>
+      <h3 class="treatment-title reveal-left s2">Glass Skin</h3>
+      <p class="treatment-desc reveal-left s3">Designed for young skin, this facial blends popular Korean skincare trends to tackle hormonal changes, acne, dryness, and irritation. Leaving the skin fresh, smooth, and ready for the day.</p>
+      <div class="treatment-price reveal-left s4">25 mins &nbsp;|&nbsp; &pound;30</div>
+      <div class="reveal-left s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
+      </div>
+    </div>
+    <div class="treatment-img">
+      <img src="assets/photography/portrait-editorial-3.jpg" alt="Glass skin teen facial with luminous result" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       0.02 — BROWS
+       =============================================================== -->
+  <div class="section-header">
+    <div class="section-number reveal s1" aria-hidden="true">0.02</div>
+    <h2 class="section-title reveal s2">Brows</h2>
+    <div class="section-rule reveal s3"></div>
+  </div>
+
+  <!-- Brow Lamination — charcoal, image left -->
+  <div class="treatment-block t-charcoal">
+    <div class="treatment-img">
+      <img src="assets/photography/portrait-editorial-1.jpg" alt="Brow lamination fluffy sculpted brows" loading="lazy">
+    </div>
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">01</div>
       <div class="treatment-label reveal-right s1">Brow Sculpting</div>
       <h3 class="treatment-title reveal-right s2">Brow Lamination</h3>
       <p class="treatment-desc reveal-right s3">A two-step treatment that corrects the brow by setting hairs into a desired, long-lasting shape. Unruly, flat or downward growing hairs are given a beautiful fluffy shape that frames your eyes.</p>
       <div class="treatment-price reveal-right s4">50 mins &nbsp;|&nbsp; &pound;42</div>
       <div class="reveal-right s5">
         <a href="book.html" class="btn-treatment">Book Now</a>
-        <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
   </div>
 
-  <!-- Treatment 3: Dermaplaning — blush / image right -->
+  <!-- Wax and Tint — blush, image right -->
   <div class="treatment-block t-blush">
     <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">0.03</div>
-      <div class="treatment-label reveal-left s1">Skin Renewal</div>
-      <h3 class="treatment-title reveal-left s2">Dermaplaning Reform</h3>
-      <p class="treatment-desc reveal-left s3">A transformative exfoliation treatment that buffs and tones the skin, leaving an immaculate foundation that appears youthful and flawless. Combined with LED light therapy.</p>
-      <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
+      <div class="treatment-number" aria-hidden="true">02</div>
+      <div class="treatment-label reveal-left s1">Brow Shaping</div>
+      <h3 class="treatment-title reveal-left s2">Wax and Tint</h3>
+      <p class="treatment-desc reveal-left s3">A precise wax and tint combination that defines and enhances your natural brow shape. Adds depth and fullness for a polished, effortless look that lasts.</p>
+      <div class="treatment-price reveal-left s4">30 mins &nbsp;|&nbsp; &pound;22</div>
       <div class="reveal-left s5">
         <a href="book.html" class="btn-treatment">Book Now</a>
-        <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
     <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning treatment — smooth radiant skin">
+      <img src="assets/photography/portrait-editorial-2.jpg" alt="Natural brow wax and tint result" loading="lazy">
     </div>
   </div>
 
-  <!-- Treatment 4: Glass Skin — image left / linen right -->
+  <!-- Brow Sculpt — linen, image left -->
   <div class="treatment-block t-linen">
     <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-3.jpg" alt="Glass skin facial — fresh luminous complexion">
+      <img src="assets/photography/portrait-editorial-4.jpg" alt="Defined sculpted brow shape" loading="lazy">
     </div>
     <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">0.04</div>
-      <div class="treatment-label reveal-right s1">Teen Facial</div>
-      <h3 class="treatment-title reveal-right s2">Glass Skin</h3>
-      <p class="treatment-desc reveal-right s3">Designed for young skin, this facial blends popular Korean skincare trends to tackle hormonal changes, acne, dryness, and irritation. Leaving the skin fresh, smooth, and ready for the day.</p>
-      <div class="treatment-price reveal-right s4">25 mins &nbsp;|&nbsp; &pound;30</div>
+      <div class="treatment-number" aria-hidden="true">03</div>
+      <div class="treatment-label reveal-right s1">Quick Shape</div>
+      <h3 class="treatment-title reveal-right s2">Brow Sculpt</h3>
+      <p class="treatment-desc reveal-right s3">A quick and precise shaping treatment to clean up and define your brows. Perfect for maintaining your shape between more intensive treatments.</p>
+      <div class="treatment-price reveal-right s4">20 mins &nbsp;|&nbsp; &pound;15</div>
       <div class="reveal-right s5">
         <a href="book.html" class="btn-treatment">Book Now</a>
-        <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
   </div>
 
-  <!-- Gallery -->
-  <section class="gallery">
-    <div class="gallery-header">
-      <h2 class="gallery-title reveal">The Studio</h2>
-      <a href="about.html" class="gallery-link reveal s2">View all <span>&rarr;</span></a>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item g1 reveal s1">
-        <img src="assets/studio/IMG_0376.jpg" alt="Ansikt studio — treatment room with art">
-        <div class="gallery-overlay"><span class="gallery-overlay-text">Our Space</span></div>
-      </div>
-      <div class="gallery-item g2 reveal s2">
-        <img src="assets/photography/portrait-skin-1.jpg" alt="Editorial beauty portrait">
-        <div class="gallery-overlay"><span class="gallery-overlay-text">Natural Beauty</span></div>
-      </div>
-      <div class="gallery-item g3 reveal s3">
-        <img src="assets/studio/IMG_0383.jpg" alt="Ansikt studio — sink and dried flowers">
-        <div class="gallery-overlay"><span class="gallery-overlay-text">Considered Details</span></div>
-      </div>
-      <div class="g4 reveal s1">
-        <div class="g4-quote">&ldquo;The results exceeded my expectations&rdquo;</div>
-        <div class="g4-attr">Sophi, Bexleyheath</div>
-      </div>
-      <div class="gallery-item g5 reveal s2">
-        <img src="assets/studio/IMG_0370.jpg" alt="Ansikt studio — treatment bed with art">
-        <div class="gallery-overlay"><span class="gallery-overlay-text">The Studio</span></div>
+  <!-- ===============================================================
+       0.03 — LASHES
+       =============================================================== -->
+  <div class="section-header">
+    <div class="section-number reveal s1" aria-hidden="true">0.03</div>
+    <h2 class="section-title reveal s2">Lashes</h2>
+    <div class="section-rule reveal s3"></div>
+  </div>
+
+  <!-- Eyelash Lift — olive, image right -->
+  <div class="treatment-block t-olive">
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">01</div>
+      <div class="treatment-label reveal-left s1">Lash Enhancement</div>
+      <h3 class="treatment-title reveal-left s2">Eyelash Lift</h3>
+      <p class="treatment-desc reveal-left s3">A semi-permanent treatment that curls and lifts your natural lashes from the root, creating the appearance of longer, fuller lashes without extensions. Lasts six to eight weeks.</p>
+      <div class="treatment-price reveal-left s4">45 mins &nbsp;|&nbsp; &pound;38</div>
+      <div class="reveal-left s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
       </div>
     </div>
+    <div class="treatment-img">
+      <img src="assets/photography/stock-beauty-1.jpg" alt="Eyelash lift curled natural lashes" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Lash Tint — charcoal, image left -->
+  <div class="treatment-block t-charcoal">
+    <div class="treatment-img">
+      <img src="assets/photography/stock-beauty-3.jpg" alt="Lash tint dark defined lashes" loading="lazy">
+    </div>
+    <div class="treatment-content">
+      <div class="treatment-number" aria-hidden="true">02</div>
+      <div class="treatment-label reveal-right s1">Lash Colour</div>
+      <h3 class="treatment-title reveal-right s2">Lash Tint</h3>
+      <p class="treatment-desc reveal-right s3">A quick treatment that darkens and defines your natural lashes, adding depth and making them appear thicker without mascara. Perfect on its own or paired with a lash lift.</p>
+      <div class="treatment-price reveal-right s4">15 mins &nbsp;|&nbsp; &pound;12</div>
+      <div class="reveal-right s5">
+        <a href="book.html" class="btn-treatment">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       0.04 — PACKAGES
+       =============================================================== -->
+  <div class="section-header">
+    <div class="section-number reveal s1" aria-hidden="true">0.04</div>
+    <h2 class="section-title reveal s2">Packages</h2>
+    <div class="section-rule reveal s3"></div>
+  </div>
+
+  <div class="packages-grid">
+    <!-- The Full Ansikt -->
+    <div class="package-card reveal s1">
+      <div class="package-number" aria-hidden="true">01</div>
+      <div class="package-label">Signature Package</div>
+      <h3 class="package-title">The Full Ansikt</h3>
+      <p class="package-includes">Ansikt Luxury Facial + Brow Lamination. Our signature combination for a complete refresh &mdash; radiant skin and perfectly sculpted brows in one session.</p>
+      <div class="package-price">90 mins &nbsp;|&nbsp; &pound;85</div>
+      <a href="book.html" class="btn-treatment">Book Now</a>
+    </div>
+
+    <!-- Brow and Lash -->
+    <div class="package-card reveal s2">
+      <div class="package-number" aria-hidden="true">02</div>
+      <div class="package-label">Eye Package</div>
+      <h3 class="package-title">Brow and Lash</h3>
+      <p class="package-includes">Brow Lamination + Eyelash Lift. The ultimate eye-framing duo &mdash; fluffy, sculpted brows paired with lifted, curled lashes for a wide-awake look.</p>
+      <div class="package-price">80 mins &nbsp;|&nbsp; &pound;72</div>
+      <a href="book.html" class="btn-treatment">Book Now</a>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       CONSULTATION CTA
+       =============================================================== -->
+  <section class="consult-cta">
+    <div class="consult-label reveal s1">Free Consultation</div>
+    <h2 class="consult-heading reveal s2">Not sure which treatment?</h2>
+    <p class="consult-body reveal s3">Every face is different. Book a free consultation and we'll recommend the perfect treatment plan tailored to your skin and goals.</p>
+    <a href="book.html" class="btn-cta reveal s4">Book a Consultation</a>
   </section>
 
-  <!-- Testimonial -->
-  <section class="testimonial">
-    <blockquote class="testimonial-quote reveal">&ldquo;Lauren&rsquo;s studio is beautiful and calming, the decor enhances the overall experience&rdquo;</blockquote>
-    <div class="testimonial-attr reveal s2">&mdash; Hollie, Putney</div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="cta-bg">
-      <img src="assets/photography/portrait-skin-4.jpg" alt="">
-    </div>
-    <div class="cta-content">
-      <h2 class="cta-heading reveal">Ready to book?</h2>
-      <p class="cta-sub reveal s2">Your skin deserves a considered approach</p>
-      <a href="book.html" class="btn-cta reveal s3">Book Your Treatment</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- ===============================================================
+       FOOTER
+       =============================================================== -->
   <footer class="footer">
     <div class="footer-grid">
       <div>
@@ -1205,15 +1196,6 @@
         menuBtn.click();
       }
     });
-
-    // Hero parallax
-    const heroImg = document.getElementById('heroImg');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY < window.innerHeight) {
-        const offset = window.scrollY * 0.25;
-        heroImg.style.transform = `translateY(${offset}px) scale(1)`;
-      }
-    }, { passive: true });
 
     // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');

@@ -9,6 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* =================================================================
+       CUSTOM FONTS
+       ================================================================= */
+    @font-face {
+      font-family: 'Ritualist';
+      src: url('fonts/Ritualist-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =================================================================
        DESIGN TOKENS
        ================================================================= */
     :root {
@@ -45,9 +56,10 @@
       --color-info-tint: #E6EEF5;
 
       /* Font stacks
-         Recoleta: commercial font — swap in via @font-face when files are available.
-         Until then, Georgia serves as the fallback. */
-      --font-display: 'Recoleta', Georgia, serif;
+         Ritualist: brand display font — used for headings, logo, nav.
+         Limited glyph set (A-Z, a-z, 0-9, hyphen, space) — display use only.
+         Punctuation falls through to Georgia. */
+      --font-display: 'Ritualist', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', sans-serif;
       --font-mono: 'Courier Prime', 'Courier New', monospace;
 
@@ -329,12 +341,12 @@
       <p class="section-desc">The Ansikt logo is a bold display serif wordmark with high stroke contrast, a decorative swash on the lowercase "a", and angular cuts on the "k" and "t".</p>
 
       <div style="background:var(--color-surface); border:1px solid var(--color-border-subtle); border-radius:var(--radius-xl); padding:48px; text-align:center; margin-bottom:24px;">
-        <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--color-ink-1); letter-spacing:-0.02em;">ansikt</div>
-        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">Logo shown in display fallback — SVG asset to be supplied</div>
+        <div style="font-family:var(--font-display); font-size:56px; font-weight:400; color:var(--color-ink-1); letter-spacing:-0.02em;">ansikt</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">Logo set in Ritualist — SVG asset to be supplied</div>
       </div>
 
       <div style="background:var(--color-charcoal); border-radius:var(--radius-xl); padding:48px; text-align:center; margin-bottom:32px;">
-        <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--color-linen); letter-spacing:-0.02em;">ansikt</div>
+        <div style="font-family:var(--font-display); font-size:56px; font-weight:400; color:var(--color-linen); letter-spacing:-0.02em;">ansikt</div>
         <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">Inverted variant on dark backgrounds</div>
       </div>
 
@@ -614,9 +626,9 @@
       <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
         <div class="card">
           <div style="padding:28px 24px 20px;">
-            <div style="font-family:var(--font-display); font-size:32px; font-weight:700; color:var(--color-ink-1); margin-bottom:6px;">Recoleta</div>
-            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-bottom:14px;">--font-display &middot; 400 500 600 700</div>
-            <p style="font-size:14px; color:var(--color-ink-2); line-height:1.5; margin:0;">Display and editorial. Section titles, hero headings, pull quotes, service names. The warm, rounded serif that echoes the logo's personality.</p>
+            <div style="font-family:var(--font-display); font-size:32px; font-weight:400; color:var(--color-ink-1); margin-bottom:6px;">Ritualist</div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-bottom:14px;">--font-display &middot; 400 &middot; self-hosted OTF</div>
+            <p style="font-size:14px; color:var(--color-ink-2); line-height:1.5; margin:0;">Display and editorial. The brand's signature typeface — used for the logo, headings, nav, and service names. Limited glyph set (A-Z, a-z, 0-9) so punctuation falls through to Georgia.</p>
           </div>
           <div style="padding:12px 24px; background:var(--color-surface-warm); font-size:12px; color:var(--color-ink-3); border-top:1px solid var(--color-border-subtle);">
             <strong style="color:var(--color-success);">DO:</strong> Headings, titles &nbsp;&nbsp;
@@ -660,7 +672,7 @@
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 700</div>
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">48–56px &middot; -0.02em</div>
           </div>
-          <div style="font-family:var(--font-display); font-size:48px; font-weight:700; color:var(--color-ink-1); line-height:1.1; letter-spacing:-0.02em;">Your Skin, Our Craft</div>
+          <div style="font-family:var(--font-display); font-size:48px; font-weight:400; color:var(--color-ink-1); line-height:1.1; letter-spacing:-0.02em;">Your Skin, Our Craft</div>
         </div>
         <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
           <div style="min-width:140px; flex-shrink:0;">
@@ -668,7 +680,7 @@
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 600</div>
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">36–40px &middot; -0.02em</div>
           </div>
-          <div style="font-family:var(--font-display); font-size:36px; font-weight:600; color:var(--color-ink-1); line-height:1.15; letter-spacing:-0.02em;">Brow Lamination</div>
+          <div style="font-family:var(--font-display); font-size:36px; font-weight:400; color:var(--color-ink-1); line-height:1.15; letter-spacing:-0.02em;">Brow Lamination</div>
         </div>
         <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
           <div style="min-width:140px; flex-shrink:0;">
@@ -676,7 +688,7 @@
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-accent);">Display 600</div>
             <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-ink-3);">28–32px &middot; -0.01em</div>
           </div>
-          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-ink-1); line-height:1.2; letter-spacing:-0.01em;">Treatment Details</div>
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:400; color:var(--color-ink-1); line-height:1.2; letter-spacing:-0.01em;">Treatment Details</div>
         </div>
         <div style="display:flex; align-items:baseline; gap:24px; padding:24px; border-bottom:1px solid var(--color-border-subtle);">
           <div style="min-width:140px; flex-shrink:0;">
@@ -730,7 +742,7 @@
         <div style="background:var(--color-success-tint); border-radius:var(--radius-lg); padding:24px;">
           <div style="font-weight:600; color:var(--color-success); font-size:14px; margin-bottom:12px;">DO</div>
           <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
-            <li>Use Recoleta for anything the user reads first — headings, titles, hero text</li>
+            <li>Use Ritualist for anything the user reads first — headings, titles, hero text, nav</li>
             <li>Use Plus Jakarta Sans for everything functional — body, buttons, nav, forms</li>
             <li>Use Courier Prime for prices, durations, and data tables</li>
             <li>Minimum 14px for any text on screen</li>
@@ -741,8 +753,8 @@
         <div style="background:var(--color-error-tint); border-radius:var(--radius-lg); padding:24px;">
           <div style="font-weight:600; color:var(--color-error); font-size:14px; margin-bottom:12px;">DON'T</div>
           <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
-            <li>Use Recoleta for body paragraphs — it's a display face</li>
-            <li>Use Plus Jakarta Sans for hero headings — that's Recoleta's job</li>
+            <li>Use Ritualist for body paragraphs — it has no punctuation glyphs</li>
+            <li>Use Plus Jakarta Sans for hero headings — that's Ritualist's job</li>
             <li>Use Courier Prime for descriptions or body copy</li>
             <li>Set any text below 14px — it's the system minimum</li>
             <li>Mix more than 2 fonts on one surface (card, section, panel)</li>
@@ -765,14 +777,14 @@
       <div style="display:flex; flex-direction:column; gap:20px;">
         <!-- Pairing 1: Charcoal on Linen -->
         <div class="card" style="padding:32px;">
-          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-ink-1); margin-bottom:12px;">Ansikt Brow Lamination</div>
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:400; color:var(--color-ink-1); margin-bottom:12px;">Ansikt Brow Lamination</div>
           <p style="color:var(--color-ink-2); max-width:500px; margin-bottom:16px;">Together with a trained HD BrowSculpt specialist, we will discuss your desired brow goal whether it be simply natural or bold look.</p>
           <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3);">Charcoal on Linen &middot; ink-1 #2C2420 on bg #F5F0E8 &middot; 11.5:1 ✓ AAA</div>
         </div>
 
         <!-- Pairing 2: Linen on Charcoal -->
         <div class="card" style="background:var(--color-charcoal); padding:32px;">
-          <div style="font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--color-linen); margin-bottom:8px;">Ansikt Luxury Facial</div>
+          <div style="font-family:var(--font-display); font-size:28px; font-weight:400; color:var(--color-linen); margin-bottom:8px;">Ansikt Luxury Facial</div>
           <div style="font-family:var(--font-body); font-size:14px; color:var(--color-plaster); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:4px;">with Alpha H</div>
           <div style="font-family:var(--font-mono); font-size:16px; color:var(--color-blush);">50 MINS | &pound;50</div>
           <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:16px;">Linen on Charcoal &middot; #F5F0E8 on #2C2420 &middot; 11.5:1 ✓ AAA</div>
@@ -822,7 +834,7 @@
         <div style="display:grid; grid-template-columns:1fr 1fr; min-height:360px; border-radius:var(--radius-xl); overflow:hidden;">
           <div style="background:var(--color-olive); padding:48px; display:flex; flex-direction:column; justify-content:center;">
             <div style="font-family:var(--font-mono); font-size:72px; font-weight:700; color:rgba(44,36,32,0.12); line-height:1; margin-bottom:16px;">0.01</div>
-            <div style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-charcoal); margin-bottom:12px;">ansikt facial</div>
+            <div style="font-family:var(--font-display); font-size:32px; font-weight:400; color:var(--color-charcoal); margin-bottom:12px;">ansikt facial</div>
             <p style="font-size:15px; color:var(--color-charcoal); line-height:1.6; opacity:0.8; margin:0 0 24px;">Targeting fine lines and dehydration whilst improving skin elasticity and complexion, beautifully complemented with a hand and arm massage.</p>
             <div style="display:flex; gap:12px;">
               <span style="font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--color-charcoal); color:var(--color-olive); padding:10px 24px; border-radius:var(--radius-md);">book now</span>
@@ -843,7 +855,7 @@
           </div>
           <div style="background:var(--color-charcoal); padding:48px; display:flex; flex-direction:column; justify-content:center;">
             <div style="font-family:var(--font-mono); font-size:72px; font-weight:700; color:rgba(245,240,232,0.08); line-height:1; margin-bottom:16px;">0.05</div>
-            <div style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-linen); margin-bottom:12px;">microdermabrasion</div>
+            <div style="font-family:var(--font-display); font-size:32px; font-weight:400; color:var(--color-linen); margin-bottom:12px;">microdermabrasion</div>
             <p style="font-size:15px; color:var(--color-plaster); line-height:1.6; margin:0 0 24px;">The ultimate non-surgical skin solution for a healthier, more radiant complexion.</p>
             <div style="display:flex; gap:12px;">
               <span style="font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--color-olive); color:var(--color-charcoal); padding:10px 24px; border-radius:var(--radius-md);">book now</span>
@@ -859,7 +871,7 @@
           <img src="assets/imagery/salon-interior.jpg" alt="" style="width:100%; height:400px; object-fit:cover; display:block;">
           <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(44,36,32,0.7) 0%, rgba(44,36,32,0.2) 60%, transparent 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:48px;">
             <div style="font-family:var(--font-body); font-size:14px; letter-spacing:0.12em; text-transform:lowercase; color:var(--color-plaster); margin-bottom:8px;">contact</div>
-            <div style="font-family:var(--font-display); font-size:40px; font-weight:700; color:var(--color-linen); margin-bottom:12px;">ansikt</div>
+            <div style="font-family:var(--font-display); font-size:40px; font-weight:400; color:var(--color-linen); margin-bottom:12px;">ansikt</div>
             <p style="font-family:var(--font-body); font-size:15px; color:var(--color-plaster); max-width:360px; margin:0;">Book online or send us a message. We'd love to hear from you.</p>
           </div>
         </div>
@@ -922,7 +934,7 @@
         <img src="assets/imagery/beauty-portrait.jpg" alt="" style="width:100%; height:360px; object-fit:cover; display:block;">
         <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(44,36,32,0.65) 0%, rgba(44,36,32,0.1) 50%, transparent 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:36px;">
           <div style="font-family:var(--font-body); font-size:14px; letter-spacing:0.12em; color:var(--color-plaster);">a n s i k t</div>
-          <div style="font-family:var(--font-display); font-size:36px; font-weight:600; color:var(--color-linen); margin-top:4px;">beauty</div>
+          <div style="font-family:var(--font-display); font-size:36px; font-weight:400; color:var(--color-linen); margin-top:4px;">beauty</div>
         </div>
       </div>
 
@@ -962,7 +974,7 @@
 
       <div class="card">
         <div style="background:var(--color-charcoal); padding:36px; position:relative;">
-          <div style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-linen); margin-bottom:4px;">Ansikt Luxury Facial</div>
+          <div style="font-family:var(--font-display); font-size:32px; font-weight:400; color:var(--color-linen); margin-bottom:4px;">Ansikt Luxury Facial</div>
           <div style="font-family:var(--font-body); font-size:14px; color:var(--color-plaster); letter-spacing:0.04em; text-transform:uppercase;">with Alpha H</div>
           <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-blush); position:absolute; top:36px; right:36px;">50 MINS | &pound;50</div>
         </div>
@@ -991,7 +1003,7 @@
       <p class="section-desc">Price list layout echoing the printed typewriter menu.</p>
 
       <div class="card" style="padding:36px;">
-        <h3 style="font-family:var(--font-display); font-size:28px; font-weight:600; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--color-border);">Facials</h3>
+        <h3 style="font-family:var(--font-display); font-size:28px; font-weight:400; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--color-border);">Facials</h3>
         <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--color-border-subtle);">
           <div><div style="font-weight:500; color:var(--color-ink-1);">Ansikt Luxury Facial</div><div style="font-size:13px; color:var(--color-ink-3);">with Alpha H &middot; Ultimate Skin Rejuvenation</div></div>
           <div style="font-family:var(--font-mono); font-size:15px; color:var(--color-ink-1); white-space:nowrap; margin-left:24px;">50 mins &nbsp; &pound;50</div>

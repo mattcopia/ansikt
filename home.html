@@ -9,6 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* =================================================================
+       CUSTOM FONTS
+       ================================================================= */
+    @font-face {
+      font-family: 'Ritualist';
+      src: url('fonts/Ritualist-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =================================================================
        TOKENS
        ================================================================= */
     :root {
@@ -26,7 +37,7 @@
       --ink-3: #8C8078;
       --accent: #B5704F;
 
-      --display: 'Recoleta', Georgia, serif;
+      --display: 'Ritualist', Georgia, serif;
       --body: 'Plus Jakarta Sans', sans-serif;
       --mono: 'Courier Prime', 'Courier New', monospace;
     }
@@ -366,7 +377,7 @@
     .hero-brand {
       font-family: var(--display);
       font-size: clamp(44px, 5vw, 64px);
-      font-weight: 700;
+      font-weight: 400;
       color: var(--charcoal);
       line-height: 1.05;
       letter-spacing: -0.02em;
@@ -499,7 +510,7 @@
     .treatment-title {
       font-family: var(--display);
       font-size: clamp(28px, 3vw, 38px);
-      font-weight: 600;
+      font-weight: 400;
       line-height: 1.15;
       margin-bottom: 16px;
       letter-spacing: -0.01em;
@@ -610,7 +621,7 @@
     .gallery-title {
       font-family: var(--display);
       font-size: clamp(28px, 3vw, 36px);
-      font-weight: 600;
+      font-weight: 400;
       color: var(--ink-1);
     }
     .gallery-link {

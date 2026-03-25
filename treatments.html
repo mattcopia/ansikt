@@ -28,7 +28,7 @@
       --blush: #DBBFB3;
       --charcoal: #2C2420;
       --terracotta: #B5704F;
-      --olive: #B8D964;
+      --olive: #C2D98A;
 
       --bg: #F5F0E8;
       --surface: #FFFFFF;
@@ -59,6 +59,17 @@
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; }
+    /* Focus indicators for keyboard navigation */
+    a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    button:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .menu-btn:focus-visible { outline: 2px solid var(--linen); outline-offset: 4px; }
+    .nav-menu-item a:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
+    .nav-sidebar-contact a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .nav-sidebar-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .footer-links a:focus-visible { outline: 2px solid var(--olive); outline-offset: 2px; }
+    .btn-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .btn-treatment:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    .treatment-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
     ::selection { background: var(--blush); color: var(--charcoal); }
 
     /* =================================================================
@@ -222,7 +233,6 @@
       font-size: 14px;
       color: var(--olive);
       letter-spacing: 0.05em;
-      opacity: 0.7;
     }
     .nav-sidebar {
       display: flex;
@@ -235,8 +245,8 @@
     .nav-sidebar-tagline {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.5;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.8;
@@ -247,7 +257,7 @@
     }
     .nav-overlay.open .nav-sidebar-tagline {
       transform: translateY(0);
-      opacity: 0.5;
+      opacity: 0.85;
     }
     .nav-sidebar-contact {
       display: flex;
@@ -265,14 +275,14 @@
     .nav-sidebar-contact a {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.6;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.03em;
-      transition: opacity 0.2s, color 0.2s;
+      transition: opacity 0.2s;
     }
     .nav-sidebar-contact a:hover {
       opacity: 1;
-      color: var(--olive);
+      text-decoration: underline;
     }
     .nav-sidebar-cta {
       display: inline-flex;
@@ -434,30 +444,10 @@
     }
 
     /* =================================================================
-       TREATMENT CARDS (split-screen)
+       TREATMENTS — Magazine Spread Grid
        ================================================================= */
-    .treatment-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 480px;
-    }
-    .treatment-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(40px, 6vw, 72px);
-      position: relative;
-      overflow: hidden;
-    }
-    .treatment-number {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(72px, 10vw, 120px);
-      line-height: 1;
-      position: absolute;
-      pointer-events: none;
-      user-select: none;
-    }
+
+    /* Shared treatment typography */
     .treatment-label {
       font-family: var(--mono);
       font-size: 12px;
@@ -474,6 +464,13 @@
       margin-bottom: 16px;
       letter-spacing: -0.01em;
     }
+    .treatment-title-sm {
+      font-family: var(--display);
+      font-size: clamp(22px, 2.2vw, 30px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
     .treatment-desc {
       font-weight: 300;
       font-size: 15px;
@@ -481,85 +478,33 @@
       margin-bottom: 24px;
       max-width: 420px;
     }
+    .treatment-desc-sm {
+      font-weight: 300;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      max-width: 380px;
+    }
     .treatment-price {
       font-family: var(--mono);
       font-size: 14px;
       margin-bottom: 28px;
     }
-    .treatment-link {
-      font-size: 14px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: gap 0.3s ease;
+    .treatment-price-sm {
+      font-family: var(--mono);
+      font-size: 12px;
+      margin-bottom: 16px;
+      opacity: 0.7;
     }
-    .treatment-link:hover { gap: 14px; }
-    .treatment-link .arrow {
-      transition: transform 0.3s ease;
-      font-size: 18px;
+    .treatment-number {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(72px, 10vw, 120px);
+      line-height: 1;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
     }
-    .treatment-link:hover .arrow { transform: translateX(4px); }
-    .treatment-img {
-      position: relative;
-      overflow: hidden;
-    }
-    .treatment-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .treatment-block:hover .treatment-img img {
-      transform: scale(1.03);
-    }
-
-    /* Colour variants */
-    .t-olive .treatment-content { background: var(--olive); }
-    .t-olive .treatment-number { color: rgba(44,36,32,0.07); top: -10px; left: -5px; }
-    .t-olive .treatment-label { color: var(--charcoal); }
-    .t-olive .treatment-title { color: var(--charcoal); }
-    .t-olive .treatment-desc { color: var(--charcoal); opacity: 0.75; }
-    .t-olive .treatment-price { color: var(--charcoal); opacity: 0.6; }
-    .t-olive .treatment-link { color: var(--charcoal); }
-    .t-olive .btn-treatment { background: var(--charcoal); color: var(--olive); }
-
-    .t-charcoal .treatment-content { background: var(--charcoal); }
-    .t-charcoal .treatment-number { color: rgba(245,240,232,0.05); top: -10px; right: -5px; left: auto; }
-    .t-charcoal .treatment-label { color: var(--plaster); }
-    .t-charcoal .treatment-title { color: var(--linen); }
-    .t-charcoal .treatment-desc { color: var(--plaster); opacity: 0.8; }
-    .t-charcoal .treatment-price { color: var(--blush); }
-    .t-charcoal .treatment-link { color: var(--olive); }
-    .t-charcoal .btn-treatment { background: var(--olive); color: var(--charcoal); }
-
-    .t-blush .treatment-content { background: var(--blush); }
-    .t-blush .treatment-number { color: rgba(44,36,32,0.06); bottom: -10px; left: -5px; top: auto; }
-    .t-blush .treatment-label { color: var(--ink-2); }
-    .t-blush .treatment-title { color: var(--charcoal); }
-    .t-blush .treatment-desc { color: var(--ink-1); opacity: 0.75; }
-    .t-blush .treatment-price { color: var(--ink-2); }
-    .t-blush .treatment-link { color: var(--accent); }
-    .t-blush .btn-treatment { background: var(--charcoal); color: var(--blush); }
-
-    .t-linen .treatment-content { background: var(--linen); }
-    .t-linen .treatment-number { color: rgba(44,36,32,0.04); top: -10px; right: -5px; left: auto; }
-    .t-linen .treatment-label { color: var(--ink-3); }
-    .t-linen .treatment-title { color: var(--charcoal); }
-    .t-linen .treatment-desc { color: var(--ink-2); }
-    .t-linen .treatment-price { color: var(--ink-2); }
-    .t-linen .treatment-link { color: var(--accent); }
-    .t-linen .btn-treatment { background: var(--olive); color: var(--charcoal); }
-
-    .t-plaster .treatment-content { background: var(--plaster); }
-    .t-plaster .treatment-number { color: rgba(44,36,32,0.06); top: -10px; left: -5px; }
-    .t-plaster .treatment-label { color: var(--ink-2); }
-    .t-plaster .treatment-title { color: var(--charcoal); }
-    .t-plaster .treatment-desc { color: var(--ink-1); opacity: 0.75; }
-    .t-plaster .treatment-price { color: var(--ink-2); }
-    .t-plaster .treatment-link { color: var(--charcoal); }
-    .t-plaster .btn-treatment { background: var(--charcoal); color: var(--plaster); }
-
     .btn-treatment {
       display: inline-block;
       font-size: 13px;
@@ -573,6 +518,116 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
+    .btn-treatment-sm {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 4px;
+      transition: transform 0.2s ease;
+    }
+
+    /* Magazine spread containers */
+    .spread {
+      padding: 0 clamp(16px, 3vw, 48px);
+      margin-bottom: 12px;
+    }
+    .spread-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    /* Spread card types */
+    .spread-card {
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+    }
+    .spread-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(24px, 3vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+    .spread-card-img { overflow: hidden; }
+    .spread-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .spread-card:hover .spread-card-img img { transform: scale(1.03); }
+
+    /* Split card (image + content side by side) */
+    .spread-split {
+      display: grid;
+      min-height: 480px;
+    }
+    .spread-split-wide { grid-template-columns: 1fr 1fr; }
+    .spread-split-narrow { grid-template-columns: 0.4fr 0.6fr; }
+    .spread-split-narrow-rev { grid-template-columns: 0.6fr 0.4fr; }
+
+    /* Vertical card (image on top, content below) */
+    .spread-vertical {
+      display: flex;
+      flex-direction: column;
+    }
+    .spread-vertical .spread-card-img { flex: 1; min-height: 200px; }
+
+    /* Full-bleed image with overlay */
+    .spread-fullbleed {
+      min-height: 50vh;
+      display: flex;
+      align-items: flex-end;
+    }
+    .spread-fullbleed-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .spread-fullbleed-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .spread-card:hover .spread-fullbleed-bg img { transform: scale(1.03); }
+    .spread-fullbleed-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,36,32,0.85) 0%, rgba(44,36,32,0.2) 50%, transparent 75%);
+    }
+    .spread-fullbleed-content {
+      position: relative;
+      z-index: 1;
+      color: var(--linen);
+      padding: clamp(24px, 3vw, 40px);
+      width: 100%;
+    }
+
+    /* Colour helpers */
+    .bg-olive { background: var(--olive); }
+    .bg-charcoal { background: var(--charcoal); }
+    .bg-blush { background: var(--blush); }
+    .bg-linen { background: var(--linen); }
+    .bg-plaster { background: var(--plaster); }
+    .ink-dark { color: var(--charcoal); }
+    .ink-dark .treatment-label { color: var(--charcoal); }
+    .ink-dark .treatment-title, .ink-dark .treatment-title-sm { color: var(--charcoal); }
+    .ink-dark .treatment-desc, .ink-dark .treatment-desc-sm { color: var(--charcoal); opacity: 0.75; }
+    .ink-dark .treatment-price, .ink-dark .treatment-price-sm { color: var(--charcoal); opacity: 0.6; }
+    .ink-dark .btn-treatment, .ink-dark .btn-treatment-sm { background: var(--charcoal); color: var(--olive); }
+    .ink-light { color: var(--linen); }
+    .ink-light .treatment-label { color: var(--plaster); }
+    .ink-light .treatment-title, .ink-light .treatment-title-sm { color: var(--linen); }
+    .ink-light .treatment-desc, .ink-light .treatment-desc-sm { color: var(--plaster); opacity: 0.8; }
+    .ink-light .treatment-price, .ink-light .treatment-price-sm { color: var(--blush); }
+    .ink-light .btn-treatment, .ink-light .btn-treatment-sm { background: var(--olive); color: var(--charcoal); }
+    .ink-warm { color: var(--charcoal); }
+    .ink-warm .treatment-label { color: var(--ink-2); }
+    .ink-warm .treatment-title, .ink-warm .treatment-title-sm { color: var(--charcoal); }
+    .ink-warm .treatment-desc, .ink-warm .treatment-desc-sm { color: var(--ink-1); opacity: 0.75; }
+    .ink-warm .treatment-price, .ink-warm .treatment-price-sm { color: var(--ink-2); }
+    .ink-warm .btn-treatment, .ink-warm .btn-treatment-sm { background: var(--charcoal); color: var(--blush); }
 
     /* =================================================================
        PACKAGES
@@ -726,7 +781,7 @@
       font-weight: 300;
       font-size: 14px;
       letter-spacing: 0.15em;
-      color: var(--ink-3);
+      color: var(--plaster);
     }
     .footer-heading {
       font-family: var(--body);
@@ -734,21 +789,21 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--ink-3);
+      color: var(--plaster);
       margin-bottom: 16px;
     }
     .footer-links { list-style: none; }
     .footer-links li { margin-bottom: 8px; }
     .footer-links a {
       font-size: 14px;
-      color: var(--plaster);
+      color: var(--linen);
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--olive); }
     .footer-contact {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--plaster);
+      color: var(--linen);
       line-height: 2;
     }
     .footer-bar {
@@ -756,7 +811,7 @@
       padding-top: 24px;
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--ink-3);
+      color: var(--plaster);
       display: flex;
       justify-content: space-between;
     }
@@ -805,12 +860,26 @@
        RESPONSIVE
        ================================================================= */
     @media (max-width: 768px) {
-      .treatment-block {
-        grid-template-columns: 1fr;
+      /* Magazine spreads — collapse to single column */
+      .spread { padding: 0 16px; margin-bottom: 8px; }
+      .spread-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px;
       }
-      .treatment-img { height: 300px; order: -1; }
-      .treatment-content { padding: 40px 24px; }
+      .spread-grid > * {
+        grid-column: 1 / -1 !important;
+      }
+      .spread-card-content { padding: 32px 24px; }
+      .spread-split {
+        grid-template-columns: 1fr !important;
+        min-height: auto;
+      }
+      .spread-split .spread-card-img { height: 280px; order: -1; }
+      .spread-vertical { min-height: auto; }
+      .spread-vertical .spread-card-img { height: 280px; }
+      .spread-fullbleed { min-height: 50vh; }
       .treatment-number { font-size: 64px; }
+      .treatment-title { font-size: 28px; }
 
       .packages-grid {
         grid-template-columns: 1fr;
@@ -852,19 +921,21 @@
       <div class="nav-bg-right"></div>
     </div>
     <div class="nav-overlay-content">
-      <nav class="nav-menu-links">
-        <div class="nav-menu-item">
-          <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="about.html"><span class="nav-menu-num">02</span> About</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
-        </div>
+      <nav class="nav-menu-links" aria-label="Main navigation">
+        <ul style="list-style:none;margin:0;padding:0;">
+          <li class="nav-menu-item">
+            <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="about.html"><span class="nav-menu-num">02</span> About</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
+          </li>
+        </ul>
       </nav>
       <aside class="nav-sidebar">
         <div class="nav-sidebar-tagline">
@@ -882,6 +953,7 @@
     </div>
   </div>
 
+  <main>
   <!-- ===============================================================
        HERO
        =============================================================== -->
@@ -900,88 +972,95 @@
     <div class="section-rule reveal s3"></div>
   </div>
 
-  <!-- Ansikt Luxury Facial — olive, image right -->
-  <div class="treatment-block t-olive">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">01</div>
-      <div class="treatment-label reveal-left s1">Signature Facial</div>
-      <h3 class="treatment-title reveal-left s2">Ansikt Luxury Facial</h3>
-      <p class="treatment-desc reveal-left s3">Targeting fine lines and dehydration whilst improving skin elasticity and complexion, beautifully complemented with a hand and arm massage. Powered by Alpha H.</p>
-      <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
-      <div class="reveal-left s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+  <!-- Facials Spread 1: Hero card (7 cols) + Vertical card (5 cols) -->
+  <div class="spread">
+    <div class="spread-grid">
+      <!-- Ansikt Luxury Facial — large hero card -->
+      <div class="spread-card spread-split spread-split-wide" style="grid-column:1/8;">
+        <div class="spread-card-content bg-olive ink-dark">
+          <div class="treatment-number" aria-hidden="true" style="color:rgba(44,36,32,0.07);top:-10px;left:-5px;">01</div>
+          <div class="treatment-label reveal-left s1">Signature Facial</div>
+          <h3 class="treatment-title reveal-left s2">Ansikt Luxury Facial</h3>
+          <p class="treatment-desc reveal-left s3">Targeting fine lines and dehydration whilst improving skin elasticity and complexion, beautifully complemented with a hand and arm massage. Powered by Alpha H.</p>
+          <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
+          <div class="reveal-left s5">
+            <a href="book.html" class="btn-treatment">Book Now</a>
+          </div>
+        </div>
+        <div class="spread-card-img">
+          <img src="assets/photography/portrait-skin-2.jpg" alt="Luxury facial treatment with glowing skin result" loading="lazy">
+        </div>
       </div>
-    </div>
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-2.jpg" alt="Luxury facial treatment with glowing skin result" loading="lazy">
-    </div>
-  </div>
 
-  <!-- Dermaplaning Reform — charcoal, image left -->
-  <div class="treatment-block t-charcoal">
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning skin renewal treatment" loading="lazy">
-    </div>
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">02</div>
-      <div class="treatment-label reveal-right s1">Skin Renewal</div>
-      <h3 class="treatment-title reveal-right s2">Dermaplaning Reform</h3>
-      <p class="treatment-desc reveal-right s3">A transformative exfoliation treatment that buffs and tones the skin, leaving an immaculate foundation that appears youthful and flawless. Combined with LED light therapy.</p>
-      <div class="treatment-price reveal-right s4">50 mins &nbsp;|&nbsp; &pound;50</div>
-      <div class="reveal-right s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Microdermabrasion — blush, image right -->
-  <div class="treatment-block t-blush">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">03</div>
-      <div class="treatment-label reveal-left s1">Resurfacing</div>
-      <h3 class="treatment-title reveal-left s2">Microdermabrasion</h3>
-      <p class="treatment-desc reveal-left s3">Crystal-free resurfacing that gently removes the outermost layer of dead skin cells, revealing a smoother, brighter complexion. Stimulates collagen production and improves skin texture.</p>
-      <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
-      <div class="reveal-left s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
-      </div>
-    </div>
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-4.jpg" alt="Microdermabrasion skin resurfacing" loading="lazy">
-    </div>
-  </div>
-
-  <!-- LED Light Therapy — linen, image left -->
-  <div class="treatment-block t-linen">
-    <div class="treatment-img">
-      <img src="assets/photography/stock-beauty-2.jpg" alt="LED light therapy collagen stimulation" loading="lazy">
-    </div>
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">04</div>
-      <div class="treatment-label reveal-right s1">Light Therapy</div>
-      <h3 class="treatment-title reveal-right s2">LED Light Therapy</h3>
-      <p class="treatment-desc reveal-right s3">Targeted light wavelengths stimulate collagen production and accelerate skin repair. A non-invasive treatment that reduces inflammation and promotes a clear, even-toned complexion.</p>
-      <div class="treatment-price reveal-right s4">30 mins &nbsp;|&nbsp; &pound;30</div>
-      <div class="reveal-right s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+      <!-- Dermaplaning Reform — tall vertical card -->
+      <div class="spread-card spread-vertical" style="grid-column:8/13;">
+        <div class="spread-card-img">
+          <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning skin renewal treatment" loading="lazy">
+        </div>
+        <div class="spread-card-content bg-charcoal ink-light">
+          <div class="treatment-label reveal s1">Skin Renewal</div>
+          <h3 class="treatment-title-sm reveal s2">Dermaplaning Reform</h3>
+          <p class="treatment-desc-sm reveal s3">A transformative exfoliation that buffs and tones the skin, leaving an immaculate foundation. Combined with LED light therapy.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="treatment-price-sm reveal s4">50 mins | &pound;50</div>
+            <a href="book.html" class="btn-treatment-sm reveal s4" style="background:var(--olive);color:var(--charcoal);">Book &rarr;</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Glass Skin — olive, image right -->
-  <div class="treatment-block t-olive">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">05</div>
-      <div class="treatment-label reveal-left s1">Teen Facial</div>
-      <h3 class="treatment-title reveal-left s2">Glass Skin</h3>
-      <p class="treatment-desc reveal-left s3">Designed for young skin, this facial blends popular Korean skincare trends to tackle hormonal changes, acne, dryness, and irritation. Leaving the skin fresh, smooth, and ready for the day.</p>
-      <div class="treatment-price reveal-left s4">25 mins &nbsp;|&nbsp; &pound;30</div>
-      <div class="reveal-left s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+  <!-- Facials Spread 2: Full-bleed Microdermabrasion (8 cols) + LED Therapy card (4 cols) -->
+  <div class="spread">
+    <div class="spread-grid">
+      <!-- Microdermabrasion — full-bleed with overlay -->
+      <div class="spread-card spread-fullbleed" style="grid-column:1/9;min-height:420px;">
+        <div class="spread-fullbleed-bg">
+          <img src="assets/photography/portrait-skin-4.jpg" alt="Microdermabrasion skin resurfacing" loading="lazy">
+        </div>
+        <div class="spread-fullbleed-content">
+          <div class="treatment-label reveal s1" style="color:var(--plaster);opacity:0.8;">Resurfacing</div>
+          <h3 class="treatment-title reveal s2" style="color:var(--linen);">Microdermabrasion</h3>
+          <p class="treatment-desc-sm reveal s3" style="color:rgba(245,240,232,0.85);">Crystal-free resurfacing that gently removes dead skin cells, revealing a smoother, brighter complexion. Stimulates collagen production.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="treatment-price-sm reveal s4" style="color:var(--plaster);">50 mins | &pound;50</div>
+            <a href="book.html" class="btn-treatment-sm reveal s4" style="background:var(--olive);color:var(--charcoal);">Book Now &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- LED Light Therapy — content-only card -->
+      <div class="spread-card" style="grid-column:9/13;">
+        <div class="spread-card-content bg-linen ink-warm" style="height:100%;">
+          <div class="treatment-number" aria-hidden="true" style="color:rgba(44,36,32,0.04);top:-10px;right:-5px;left:auto;">04</div>
+          <div class="treatment-label reveal s1">Light Therapy</div>
+          <h3 class="treatment-title-sm reveal s2">LED Light Therapy</h3>
+          <p class="treatment-desc-sm reveal s3">Targeted light wavelengths stimulate collagen production and accelerate skin repair. Non-invasive, reduces inflammation.</p>
+          <div class="treatment-price-sm reveal s4">30 mins | &pound;30</div>
+          <a href="book.html" class="btn-treatment-sm reveal s5" style="background:var(--charcoal);color:var(--linen);">Book &rarr;</a>
+        </div>
       </div>
     </div>
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-3.jpg" alt="Glass skin teen facial with luminous result" loading="lazy">
+  </div>
+
+  <!-- Facials Spread 3: Glass Skin — 70/30 wide image + narrow olive content -->
+  <div class="spread">
+    <div class="spread-grid">
+      <div class="spread-card spread-split" style="grid-column:1/13;grid-template-columns:0.7fr 0.3fr;min-height:400px;">
+        <div class="spread-card-img">
+          <img src="assets/photography/portrait-editorial-3.jpg" alt="Glass skin teen facial with luminous result" loading="lazy">
+        </div>
+        <div class="spread-card-content bg-olive ink-dark">
+          <div class="treatment-number" aria-hidden="true" style="color:rgba(44,36,32,0.07);top:-10px;left:-5px;">05</div>
+          <div class="treatment-label reveal-right s1">Teen Facial</div>
+          <h3 class="treatment-title reveal-right s2">Glass Skin</h3>
+          <p class="treatment-desc reveal-right s3">Designed for young skin, blending Korean skincare trends to tackle hormonal changes, acne, and irritation.</p>
+          <div class="treatment-price reveal-right s4">25 mins &nbsp;|&nbsp; &pound;30</div>
+          <div class="reveal-right s5">
+            <a href="book.html" class="btn-treatment">Book Now</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -994,53 +1073,53 @@
     <div class="section-rule reveal s3"></div>
   </div>
 
-  <!-- Brow Lamination — charcoal, image left -->
-  <div class="treatment-block t-charcoal">
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-1.jpg" alt="Brow lamination fluffy sculpted brows" loading="lazy">
-    </div>
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">01</div>
-      <div class="treatment-label reveal-right s1">Brow Sculpting</div>
-      <h3 class="treatment-title reveal-right s2">Brow Lamination</h3>
-      <p class="treatment-desc reveal-right s3">A two-step treatment that corrects the brow by setting hairs into a desired, long-lasting shape. Unruly, flat or downward growing hairs are given a beautiful fluffy shape that frames your eyes.</p>
-      <div class="treatment-price reveal-right s4">50 mins &nbsp;|&nbsp; &pound;42</div>
-      <div class="reveal-right s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+  <!-- Brows Spread: 3-column — image (5 cols) + content (4 cols) + detail image (3 cols) -->
+  <div class="spread">
+    <div class="spread-grid">
+      <!-- Brow Lamination — large image -->
+      <div class="spread-card" style="grid-column:1/6;min-height:500px;">
+        <div class="spread-card-img" style="height:100%;">
+          <img src="assets/photography/portrait-editorial-1.jpg" alt="Brow lamination fluffy sculpted brows" loading="lazy">
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Wax and Tint — blush, image right -->
-  <div class="treatment-block t-blush">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">02</div>
-      <div class="treatment-label reveal-left s1">Brow Shaping</div>
-      <h3 class="treatment-title reveal-left s2">Wax and Tint</h3>
-      <p class="treatment-desc reveal-left s3">A precise wax and tint combination that defines and enhances your natural brow shape. Adds depth and fullness for a polished, effortless look that lasts.</p>
-      <div class="treatment-price reveal-left s4">30 mins &nbsp;|&nbsp; &pound;22</div>
-      <div class="reveal-left s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+      <!-- Brow Lamination content + Wax and Tint stacked -->
+      <div style="grid-column:6/10;display:flex;flex-direction:column;gap:12px;">
+        <div class="spread-card" style="flex:1;">
+          <div class="spread-card-content bg-charcoal ink-light" style="height:100%;">
+            <div class="treatment-label reveal s1">Brow Sculpting</div>
+            <h3 class="treatment-title reveal s2">Brow Lamination</h3>
+            <p class="treatment-desc reveal s3">A two-step treatment that corrects the brow by setting hairs into a desired, long-lasting shape. Fluffy, face-framing results.</p>
+            <div class="treatment-price reveal s4">50 mins &nbsp;|&nbsp; &pound;42</div>
+            <div class="reveal s5">
+              <a href="book.html" class="btn-treatment" style="background:var(--olive);color:var(--charcoal);">Book Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="spread-card" style="flex:0 0 auto;">
+          <div class="spread-card-content bg-blush ink-warm" style="padding:clamp(20px,2vw,32px);">
+            <div class="treatment-label reveal s1">Brow Shaping</div>
+            <h3 class="treatment-title-sm reveal s2">Wax and Tint</h3>
+            <p class="treatment-desc-sm reveal s3">Precise wax and tint combination — depth and fullness for a polished, effortless look.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div class="treatment-price-sm reveal s4">30 mins | &pound;22</div>
+              <a href="book.html" class="btn-treatment-sm reveal s4" style="background:var(--charcoal);color:var(--blush);">Book &rarr;</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-2.jpg" alt="Natural brow wax and tint result" loading="lazy">
-    </div>
-  </div>
 
-  <!-- Brow Sculpt — linen, image left -->
-  <div class="treatment-block t-linen">
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-editorial-4.jpg" alt="Defined sculpted brow shape" loading="lazy">
-    </div>
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">03</div>
-      <div class="treatment-label reveal-right s1">Quick Shape</div>
-      <h3 class="treatment-title reveal-right s2">Brow Sculpt</h3>
-      <p class="treatment-desc reveal-right s3">A quick and precise shaping treatment to clean up and define your brows. Perfect for maintaining your shape between more intensive treatments.</p>
-      <div class="treatment-price reveal-right s4">20 mins &nbsp;|&nbsp; &pound;15</div>
-      <div class="reveal-right s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+      <!-- Brow Sculpt — tall detail image + content below -->
+      <div class="spread-card spread-vertical" style="grid-column:10/13;">
+        <div class="spread-card-img">
+          <img src="assets/photography/portrait-editorial-4.jpg" alt="Defined sculpted brow shape" loading="lazy">
+        </div>
+        <div class="spread-card-content bg-linen ink-warm" style="padding:clamp(16px,2vw,24px);">
+          <div class="treatment-label reveal s1">Quick Shape</div>
+          <h3 class="treatment-title-sm reveal s2">Brow Sculpt</h3>
+          <div class="treatment-price-sm reveal s3">20 mins | &pound;15</div>
+          <a href="book.html" class="btn-treatment-sm reveal s4" style="background:var(--charcoal);color:var(--linen);">Book &rarr;</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1054,36 +1133,37 @@
     <div class="section-rule reveal s3"></div>
   </div>
 
-  <!-- Eyelash Lift — olive, image right -->
-  <div class="treatment-block t-olive">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">01</div>
-      <div class="treatment-label reveal-left s1">Lash Enhancement</div>
-      <h3 class="treatment-title reveal-left s2">Eyelash Lift</h3>
-      <p class="treatment-desc reveal-left s3">A semi-permanent treatment that curls and lifts your natural lashes from the root, creating the appearance of longer, fuller lashes without extensions. Lasts six to eight weeks.</p>
-      <div class="treatment-price reveal-left s4">45 mins &nbsp;|&nbsp; &pound;38</div>
-      <div class="reveal-left s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+  <!-- Lashes Spread: Full-bleed Eyelash Lift (8 cols) + Lash Tint olive card (4 cols) -->
+  <div class="spread">
+    <div class="spread-grid">
+      <!-- Eyelash Lift — full-bleed with overlay -->
+      <div class="spread-card spread-fullbleed" style="grid-column:1/9;min-height:420px;">
+        <div class="spread-fullbleed-bg">
+          <img src="assets/photography/stock-beauty-1.jpg" alt="Eyelash lift curled natural lashes" loading="lazy">
+        </div>
+        <div class="spread-fullbleed-content">
+          <div class="treatment-label reveal s1" style="color:var(--plaster);opacity:0.8;">Lash Enhancement</div>
+          <h3 class="treatment-title reveal s2" style="color:var(--linen);">Eyelash Lift</h3>
+          <p class="treatment-desc-sm reveal s3" style="color:rgba(245,240,232,0.85);">Curls and lifts your natural lashes from the root — longer, fuller lashes without extensions. Lasts six to eight weeks.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="treatment-price-sm reveal s4" style="color:var(--plaster);">45 mins | &pound;38</div>
+            <a href="book.html" class="btn-treatment-sm reveal s4" style="background:var(--olive);color:var(--charcoal);">Book Now &rarr;</a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="treatment-img">
-      <img src="assets/photography/stock-beauty-1.jpg" alt="Eyelash lift curled natural lashes" loading="lazy">
-    </div>
-  </div>
 
-  <!-- Lash Tint — charcoal, image left -->
-  <div class="treatment-block t-charcoal">
-    <div class="treatment-img">
-      <img src="assets/photography/stock-beauty-3.jpg" alt="Lash tint dark defined lashes" loading="lazy">
-    </div>
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">02</div>
-      <div class="treatment-label reveal-right s1">Lash Colour</div>
-      <h3 class="treatment-title reveal-right s2">Lash Tint</h3>
-      <p class="treatment-desc reveal-right s3">A quick treatment that darkens and defines your natural lashes, adding depth and making them appear thicker without mascara. Perfect on its own or paired with a lash lift.</p>
-      <div class="treatment-price reveal-right s4">15 mins &nbsp;|&nbsp; &pound;12</div>
-      <div class="reveal-right s5">
-        <a href="book.html" class="btn-treatment">Book Now</a>
+      <!-- Lash Tint — olive content card -->
+      <div class="spread-card" style="grid-column:9/13;">
+        <div class="spread-card-content bg-olive ink-dark" style="height:100%;">
+          <div class="treatment-number" aria-hidden="true" style="color:rgba(44,36,32,0.07);top:-10px;left:-5px;">02</div>
+          <div class="treatment-label reveal s1">Lash Colour</div>
+          <h3 class="treatment-title reveal s2">Lash Tint</h3>
+          <p class="treatment-desc reveal s3">Darkens and defines your natural lashes, adding depth and thickness without mascara. Perfect paired with a lash lift.</p>
+          <div class="treatment-price reveal s4">15 mins &nbsp;|&nbsp; &pound;12</div>
+          <div class="reveal s5">
+            <a href="book.html" class="btn-treatment">Book Now</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1128,6 +1208,7 @@
     <p class="consult-body reveal s3">Every face is different. Book a free consultation and we'll recommend the perfect treatment plan tailored to your skin and goals.</p>
     <a href="book.html" class="btn-cta reveal s4">Book a Consultation</a>
   </section>
+  </main>
 
   <!-- ===============================================================
        FOOTER
@@ -1175,7 +1256,9 @@
       navOverlay.classList.toggle('open', menuOpen);
       floatingLogo.classList.toggle('inverted', menuOpen);
       menuBtn.setAttribute('aria-expanded', menuOpen);
+      menuBtn.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
       document.body.style.overflow = menuOpen ? 'hidden' : '';
+      if (menuOpen) { navOverlay.querySelector('a').focus(); }
     });
 
     // Close menu on link click
@@ -1194,6 +1277,21 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuOpen) {
         menuBtn.click();
+      }
+    });
+
+    // Focus trap for nav overlay
+    navOverlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = navOverlay.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
 

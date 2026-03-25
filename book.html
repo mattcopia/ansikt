@@ -28,7 +28,7 @@
       --blush: #DBBFB3;
       --charcoal: #2C2420;
       --terracotta: #B5704F;
-      --olive: #B8D964;
+      --olive: #C2D98A;
 
       --bg: #F5F0E8;
       --surface: #FFFFFF;
@@ -59,6 +59,15 @@
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; }
+    /* Focus indicators for keyboard navigation */
+    a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    button:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .menu-btn:focus-visible { outline: 2px solid var(--linen); outline-offset: 4px; }
+    .nav-menu-item a:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
+    .nav-sidebar-contact a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .nav-sidebar-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .footer-links a:focus-visible { outline: 2px solid var(--olive); outline-offset: 2px; }
+    .btn-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
     ::selection { background: var(--blush); color: var(--charcoal); }
 
     /* =================================================================
@@ -222,7 +231,6 @@
       font-size: 14px;
       color: var(--olive);
       letter-spacing: 0.05em;
-      opacity: 0.7;
     }
     .nav-sidebar {
       display: flex;
@@ -235,8 +243,8 @@
     .nav-sidebar-tagline {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.5;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.8;
@@ -247,7 +255,7 @@
     }
     .nav-overlay.open .nav-sidebar-tagline {
       transform: translateY(0);
-      opacity: 0.5;
+      opacity: 0.85;
     }
     .nav-sidebar-contact {
       display: flex;
@@ -265,14 +273,14 @@
     .nav-sidebar-contact a {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.6;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.03em;
-      transition: opacity 0.2s, color 0.2s;
+      transition: opacity 0.2s;
     }
     .nav-sidebar-contact a:hover {
       opacity: 1;
-      color: var(--olive);
+      text-decoration: underline;
     }
     .nav-sidebar-cta {
       display: inline-flex;
@@ -729,7 +737,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--ink-2);
+      color: var(--charcoal);
     }
     .form-input {
       font-family: var(--body);
@@ -752,6 +760,10 @@
       border-color: var(--charcoal);
       background: rgba(255, 255, 255, 0.6);
       box-shadow: 0 0 0 3px rgba(44, 36, 32, 0.06);
+    }
+    .form-input:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--charcoal);
+      outline-offset: 1px;
     }
     .form-input.error {
       border-color: var(--terracotta);
@@ -976,7 +988,7 @@
       font-weight: 300;
       font-size: 14px;
       letter-spacing: 0.15em;
-      color: var(--ink-3);
+      color: var(--plaster);
     }
     .footer-heading {
       font-family: var(--body);
@@ -984,21 +996,21 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--ink-3);
+      color: var(--plaster);
       margin-bottom: 16px;
     }
     .footer-links { list-style: none; }
     .footer-links li { margin-bottom: 8px; }
     .footer-links a {
       font-size: 14px;
-      color: var(--plaster);
+      color: var(--linen);
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--olive); }
     .footer-contact {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--plaster);
+      color: var(--linen);
       line-height: 2;
     }
     .footer-bar {
@@ -1006,7 +1018,7 @@
       padding-top: 24px;
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--ink-3);
+      color: var(--plaster);
       display: flex;
       justify-content: space-between;
     }
@@ -1126,19 +1138,21 @@
       <div class="nav-bg-right"></div>
     </div>
     <div class="nav-overlay-content">
-      <nav class="nav-menu-links">
-        <div class="nav-menu-item">
-          <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="about.html"><span class="nav-menu-num">02</span> About</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
-        </div>
+      <nav class="nav-menu-links" aria-label="Main navigation">
+        <ul style="list-style:none;margin:0;padding:0;">
+          <li class="nav-menu-item">
+            <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="about.html"><span class="nav-menu-num">02</span> About</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
+          </li>
+        </ul>
       </nav>
       <aside class="nav-sidebar">
         <div class="nav-sidebar-tagline">
@@ -1156,6 +1170,7 @@
     </div>
   </div>
 
+  <main>
   <!-- Page Header -->
   <header class="page-header">
     <div class="page-header-label reveal s1">Book Online</div>
@@ -1218,7 +1233,7 @@
           <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
-        <div id="timeSection">
+        <div id="timeSection" aria-live="polite">
           <div class="time-section-label">Available Times</div>
           <div class="time-grid" id="timeGrid">
             <div class="no-date-message">Select a date to see available times</div>
@@ -1240,32 +1255,35 @@
       <!-- Step 3: Your Details -->
       <div class="booking-step" id="step2">
         <div class="details-form">
+          <fieldset style="border:none;margin:0;padding:0;">
+          <legend class="form-label" style="margin-bottom:16px;font-size:13px;">Your Details</legend>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="firstName">First Name</label>
-              <input type="text" class="form-input" id="firstName" placeholder="Jane" autocomplete="given-name">
+              <input type="text" class="form-input" id="firstName" placeholder="Jane" autocomplete="given-name" aria-describedby="firstNameError">
               <div class="form-error" id="firstNameError"></div>
             </div>
             <div class="form-group">
               <label class="form-label" for="lastName">Last Name</label>
-              <input type="text" class="form-input" id="lastName" placeholder="Doe" autocomplete="family-name">
+              <input type="text" class="form-input" id="lastName" placeholder="Doe" autocomplete="family-name" aria-describedby="lastNameError">
               <div class="form-error" id="lastNameError"></div>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label" for="email">Email</label>
-            <input type="email" class="form-input" id="email" placeholder="jane@example.com" autocomplete="email">
+            <input type="email" class="form-input" id="email" placeholder="jane@example.com" autocomplete="email" aria-describedby="emailError">
             <div class="form-error" id="emailError"></div>
           </div>
           <div class="form-group">
             <label class="form-label" for="phone">Phone</label>
-            <input type="tel" class="form-input" id="phone" placeholder="+44 7700 900000" autocomplete="tel">
+            <input type="tel" class="form-input" id="phone" placeholder="+44 7700 900000" autocomplete="tel" aria-describedby="phoneError">
             <div class="form-error" id="phoneError"></div>
           </div>
           <div class="form-group">
             <label class="form-label" for="notes">Any notes for your therapist? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">(optional)</span></label>
             <textarea class="form-input" id="notes" placeholder="Sensitive skin, allergies, preferences..."></textarea>
           </div>
+          </fieldset>
         </div>
 
         <div class="booking-actions">
@@ -1338,6 +1356,8 @@
     </div>
   </div>
 
+  </main>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-grid">
@@ -1384,7 +1404,9 @@
       navOverlay.classList.toggle('open', menuOpen);
       floatingLogo.classList.toggle('inverted', menuOpen);
       menuBtn.setAttribute('aria-expanded', menuOpen);
+      menuBtn.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
       document.body.style.overflow = menuOpen ? 'hidden' : '';
+      if (menuOpen) { navOverlay.querySelector('a').focus(); }
     });
 
     navOverlay.querySelectorAll('a').forEach(link => {
@@ -1401,6 +1423,21 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuOpen) {
         menuBtn.click();
+      }
+    });
+
+    // Focus trap for nav overlay
+    navOverlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = navOverlay.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
 

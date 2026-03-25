@@ -28,7 +28,7 @@
       --blush: #DBBFB3;
       --charcoal: #2C2420;
       --terracotta: #B5704F;
-      --olive: #B8D964;
+      --olive: #C2D98A;
 
       --bg: #F5F0E8;
       --surface: #FFFFFF;
@@ -59,6 +59,15 @@
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; }
+    /* Focus indicators for keyboard navigation */
+    a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    button:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .menu-btn:focus-visible { outline: 2px solid var(--linen); outline-offset: 4px; }
+    .nav-menu-item a:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
+    .nav-sidebar-contact a:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .nav-sidebar-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
+    .footer-links a:focus-visible { outline: 2px solid var(--olive); outline-offset: 2px; }
+    .btn-cta:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 2px; }
     ::selection { background: var(--blush); color: var(--charcoal); }
 
     /* =================================================================
@@ -229,7 +238,6 @@
       font-size: 14px;
       color: var(--olive);
       letter-spacing: 0.05em;
-      opacity: 0.7;
     }
 
     /* Right column — editorial detail */
@@ -244,8 +252,8 @@
     .nav-sidebar-tagline {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.5;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.8;
@@ -256,7 +264,7 @@
     }
     .nav-overlay.open .nav-sidebar-tagline {
       transform: translateY(0);
-      opacity: 0.5;
+      opacity: 0.85;
     }
     .nav-sidebar-contact {
       display: flex;
@@ -274,14 +282,14 @@
     .nav-sidebar-contact a {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--linen);
-      opacity: 0.6;
+      color: var(--charcoal);
+      opacity: 0.7;
       letter-spacing: 0.03em;
-      transition: opacity 0.2s, color 0.2s;
+      transition: opacity 0.2s;
     }
     .nav-sidebar-contact a:hover {
       opacity: 1;
-      color: var(--olive);
+      text-decoration: underline;
     }
     .nav-sidebar-cta {
       display: inline-flex;
@@ -475,30 +483,10 @@
     }
 
     /* =================================================================
-       TREATMENTS
+       TREATMENTS — Varied Grid Rhythms
        ================================================================= */
-    .treatment-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 520px;
-    }
-    .treatment-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(40px, 6vw, 72px);
-      position: relative;
-      overflow: hidden;
-    }
-    .treatment-number {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(72px, 10vw, 120px);
-      line-height: 1;
-      position: absolute;
-      pointer-events: none;
-      user-select: none;
-    }
+
+    /* Shared treatment typography */
     .treatment-label {
       font-family: var(--mono);
       font-size: 12px;
@@ -527,6 +515,15 @@
       font-size: 14px;
       margin-bottom: 28px;
     }
+    .treatment-number {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(72px, 10vw, 120px);
+      line-height: 1;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
     .treatment-link {
       font-size: 14px;
       font-weight: 500;
@@ -541,57 +538,6 @@
       font-size: 18px;
     }
     .treatment-link:hover .arrow { transform: translateX(4px); }
-    .treatment-img {
-      position: relative;
-      overflow: hidden;
-    }
-    .treatment-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .treatment-block:hover .treatment-img img {
-      transform: scale(1.03);
-    }
-
-    /* Colour variants */
-    .t-olive .treatment-content { background: var(--olive); }
-    .t-olive .treatment-number { color: rgba(44,36,32,0.07); top: -10px; left: -5px; }
-    .t-olive .treatment-label { color: var(--charcoal); }
-    .t-olive .treatment-title { color: var(--charcoal); }
-    .t-olive .treatment-desc { color: var(--charcoal); opacity: 0.75; }
-    .t-olive .treatment-price { color: var(--charcoal); opacity: 0.6; }
-    .t-olive .treatment-link { color: var(--charcoal); }
-    .t-olive .btn-treatment { background: var(--charcoal); color: var(--olive); }
-
-    .t-charcoal .treatment-content { background: var(--charcoal); }
-    .t-charcoal .treatment-number { color: rgba(245,240,232,0.05); top: -10px; right: -5px; left: auto; }
-    .t-charcoal .treatment-label { color: var(--plaster); }
-    .t-charcoal .treatment-title { color: var(--linen); }
-    .t-charcoal .treatment-desc { color: var(--plaster); opacity: 0.8; }
-    .t-charcoal .treatment-price { color: var(--blush); }
-    .t-charcoal .treatment-link { color: var(--olive); }
-    .t-charcoal .btn-treatment { background: var(--olive); color: var(--charcoal); }
-
-    .t-blush .treatment-content { background: var(--blush); }
-    .t-blush .treatment-number { color: rgba(44,36,32,0.06); bottom: -10px; left: -5px; top: auto; }
-    .t-blush .treatment-label { color: var(--ink-2); }
-    .t-blush .treatment-title { color: var(--charcoal); }
-    .t-blush .treatment-desc { color: var(--ink-1); opacity: 0.75; }
-    .t-blush .treatment-price { color: var(--ink-2); }
-    .t-blush .treatment-link { color: var(--accent); }
-    .t-blush .btn-treatment { background: var(--charcoal); color: var(--blush); }
-
-    .t-linen .treatment-content { background: var(--linen); }
-    .t-linen .treatment-number { color: rgba(44,36,32,0.04); top: -10px; right: -5px; left: auto; }
-    .t-linen .treatment-label { color: var(--ink-3); }
-    .t-linen .treatment-title { color: var(--charcoal); }
-    .t-linen .treatment-desc { color: var(--ink-2); }
-    .t-linen .treatment-price { color: var(--ink-2); }
-    .t-linen .treatment-link { color: var(--accent); }
-    .t-linen .btn-treatment { background: var(--olive); color: var(--charcoal); }
-
     .btn-treatment {
       display: inline-block;
       font-size: 13px;
@@ -605,6 +551,168 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
+
+    /* Treatment 1 — 38/62 narrow content, wide image */
+    .t1-block {
+      display: grid;
+      grid-template-columns: 0.38fr 0.62fr;
+      min-height: 560px;
+    }
+    .t1-content {
+      background: var(--olive);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(32px, 5vw, 64px);
+      position: relative;
+      overflow: hidden;
+    }
+    .t1-content .treatment-number { color: rgba(44,36,32,0.07); top: -10px; left: -5px; }
+    .t1-content .treatment-label { color: var(--charcoal); }
+    .t1-content .treatment-title { color: var(--charcoal); }
+    .t1-content .treatment-desc { color: var(--charcoal); opacity: 0.75; }
+    .t1-content .treatment-price { color: var(--charcoal); opacity: 0.6; }
+    .t1-content .treatment-link { color: var(--charcoal); }
+    .t1-content .btn-treatment { background: var(--charcoal); color: var(--olive); }
+    .t1-image { overflow: hidden; }
+    .t1-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .t1-block:hover .t1-image img { transform: scale(1.03); }
+
+    /* Pull quote strip — full-width breather */
+    .pull-quote {
+      background: var(--charcoal);
+      color: var(--linen);
+      padding: clamp(48px, 6vw, 80px) clamp(32px, 8vw, 120px);
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .pull-quote-mark {
+      font-family: var(--display);
+      font-size: clamp(80px, 10vw, 140px);
+      line-height: 0.7;
+      color: var(--olive);
+      opacity: 0.2;
+      flex-shrink: 0;
+    }
+    .pull-quote blockquote {
+      font-family: var(--display);
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 560px;
+    }
+    .pull-quote-attr {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--plaster);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* Treatment 2 — 3-column with detail image */
+    .t2-block {
+      display: grid;
+      grid-template-columns: 1fr 0.5fr 0.5fr;
+      min-height: 500px;
+    }
+    .t2-image-main { overflow: hidden; }
+    .t2-image-main img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .t2-block:hover .t2-image-main img { transform: scale(1.03); }
+    .t2-content {
+      background: var(--charcoal);
+      color: var(--linen);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(24px, 3vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+    .t2-content .treatment-number { color: rgba(245,240,232,0.05); top: -10px; right: -5px; left: auto; }
+    .t2-content .treatment-label { color: var(--plaster); }
+    .t2-content .treatment-title { color: var(--linen); }
+    .t2-content .treatment-desc { color: var(--plaster); opacity: 0.8; }
+    .t2-content .treatment-price { color: var(--blush); }
+    .t2-content .treatment-link { color: var(--olive); }
+    .t2-content .btn-treatment { background: var(--olive); color: var(--charcoal); }
+    .t2-image-detail { overflow: hidden; }
+    .t2-image-detail img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .t2-block:hover .t2-image-detail img { transform: scale(1.03); }
+
+    /* Treatment 3 — full-bleed image with text overlay */
+    .t3-block {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .t3-bg { position: absolute; inset: 0; }
+    .t3-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .t3-block:hover .t3-bg img { transform: scale(1.03); }
+    .t3-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,36,32,0.85) 0%, rgba(44,36,32,0.3) 40%, transparent 70%);
+    }
+    .t3-content {
+      position: relative;
+      z-index: 1;
+      color: var(--linen);
+      padding: clamp(40px, 6vw, 80px);
+      max-width: 560px;
+    }
+    .t3-content .treatment-label { color: var(--plaster); opacity: 0.8; }
+    .t3-content .treatment-title { color: var(--linen); }
+    .t3-content .treatment-desc { color: rgba(245,240,232,0.85); }
+    .t3-content .treatment-price { color: var(--plaster); }
+    .t3-content .treatment-link { color: var(--olive); }
+    .t3-content .btn-treatment { background: var(--olive); color: var(--charcoal); }
+
+    /* Treatment 4 — 70/30 wide image, narrow content */
+    .t4-block {
+      display: grid;
+      grid-template-columns: 0.7fr 0.3fr;
+      min-height: 420px;
+    }
+    .t4-image { overflow: hidden; }
+    .t4-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .t4-block:hover .t4-image img { transform: scale(1.03); }
+    .t4-content {
+      background: var(--blush);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(24px, 3vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+    .t4-content .treatment-number { color: rgba(44,36,32,0.06); bottom: -10px; left: -5px; top: auto; }
+    .t4-content .treatment-label { color: var(--ink-2); }
+    .t4-content .treatment-title { color: var(--charcoal); }
+    .t4-content .treatment-desc { color: var(--ink-1); opacity: 0.75; }
+    .t4-content .treatment-price { color: var(--ink-2); }
+    .t4-content .treatment-link { color: var(--accent); }
+    .t4-content .btn-treatment { background: var(--charcoal); color: var(--blush); }
 
     /* =================================================================
        GALLERY
@@ -806,7 +914,7 @@
       font-weight: 300;
       font-size: 14px;
       letter-spacing: 0.15em;
-      color: var(--ink-3);
+      color: var(--plaster);
     }
     .footer-heading {
       font-family: var(--body);
@@ -814,21 +922,21 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--ink-3);
+      color: var(--plaster);
       margin-bottom: 16px;
     }
     .footer-links { list-style: none; }
     .footer-links li { margin-bottom: 8px; }
     .footer-links a {
       font-size: 14px;
-      color: var(--plaster);
+      color: var(--linen);
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--olive); }
     .footer-contact {
       font-family: var(--mono);
       font-size: 13px;
-      color: var(--plaster);
+      color: var(--linen);
       line-height: 2;
     }
     .footer-bar {
@@ -836,7 +944,7 @@
       padding-top: 24px;
       font-family: var(--mono);
       font-size: 12px;
-      color: var(--ink-3);
+      color: var(--plaster);
       display: flex;
       justify-content: space-between;
     }
@@ -923,12 +1031,42 @@
       .hero-content { padding: 48px 24px 64px; }
       .hero-number { font-size: 80px; }
 
-      .treatment-block {
+      /* Treatment 1 — 38/62 → stacked */
+      .t1-block {
         grid-template-columns: 1fr;
       }
-      .treatment-img { height: 300px; order: -1; }
-      .treatment-content { padding: 40px 24px; }
+      .t1-image { height: 300px; order: -1; }
+      .t1-content { padding: 40px 24px; }
       .treatment-number { font-size: 64px; }
+
+      /* Pull quote — stack vertically */
+      .pull-quote {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 24px;
+        gap: 16px;
+      }
+      .pull-quote-mark { font-size: 64px; }
+      .pull-quote-attr { margin-left: 0; }
+
+      /* Treatment 2 — 3-column → stacked */
+      .t2-block {
+        grid-template-columns: 1fr;
+      }
+      .t2-image-main { height: 300px; }
+      .t2-content { padding: 40px 24px; }
+      .t2-image-detail { height: 250px; }
+
+      /* Treatment 3 — full-bleed stays, adjust padding */
+      .t3-block { min-height: 60vh; }
+      .t3-content { padding: 32px 24px; }
+
+      /* Treatment 4 — 70/30 → stacked */
+      .t4-block {
+        grid-template-columns: 1fr;
+      }
+      .t4-image { height: 300px; order: -1; }
+      .t4-content { padding: 40px 24px; }
 
       .gallery-grid {
         grid-template-columns: 1fr 1fr;
@@ -966,19 +1104,21 @@
       <div class="nav-bg-right"></div>
     </div>
     <div class="nav-overlay-content">
-      <nav class="nav-menu-links">
-        <div class="nav-menu-item">
-          <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="about.html"><span class="nav-menu-num">02</span> About</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
-        </div>
-        <div class="nav-menu-item">
-          <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
-        </div>
+      <nav class="nav-menu-links" aria-label="Main navigation">
+        <ul style="list-style:none;margin:0;padding:0;">
+          <li class="nav-menu-item">
+            <a href="home.html"><span class="nav-menu-num">01</span> Home</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="about.html"><span class="nav-menu-num">02</span> About</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="treatments.html"><span class="nav-menu-num">03</span> Treatments</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="book.html"><span class="nav-menu-num">04</span> Book</a>
+          </li>
+        </ul>
       </nav>
       <aside class="nav-sidebar">
         <div class="nav-sidebar-tagline">
@@ -997,10 +1137,11 @@
   </div>
 
   <!-- Hero -->
+  <main>
   <section class="hero">
     <div class="hero-content">
       <div class="hero-number" aria-hidden="true">0.01</div>
-      <div class="hero-brand">ansikt</div>
+      <h1 class="hero-brand">ansikt</h1>
       <div class="hero-sub">b e a u t y</div>
       <p class="hero-tagline">Bespoke brow and facial treatments in a calm, considered space. Every visit is tailored to you.</p>
       <div class="hero-actions">
@@ -1020,9 +1161,9 @@
     <p class="philosophy-body reveal s3">We believe in warm, considered spaces and treatments that work with your skin's natural beauty. Every detail in our studio — from the bare plaster walls to the products we choose — reflects a commitment to authenticity and care.</p>
   </section>
 
-  <!-- Treatment 1: Ansikt Luxury Facial — olive / image right -->
-  <div class="treatment-block t-olive">
-    <div class="treatment-content">
+  <!-- Treatment 1: Ansikt Luxury Facial — 38/62 narrow content, wide image -->
+  <div class="t1-block">
+    <div class="t1-content">
       <div class="treatment-number" aria-hidden="true">0.01</div>
       <div class="treatment-label reveal-left s1">Signature Facial</div>
       <h3 class="treatment-title reveal-left s2">Ansikt Luxury Facial</h3>
@@ -1033,17 +1174,24 @@
         <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
-    <div class="treatment-img">
+    <div class="t1-image">
       <img src="assets/photography/portrait-skin-2.jpg" alt="Luxury facial treatment — glowing skin close-up">
     </div>
   </div>
 
-  <!-- Treatment 2: Brow Lamination — image left / charcoal right -->
-  <div class="treatment-block t-charcoal">
-    <div class="treatment-img">
+  <!-- Pull quote — full-width breather -->
+  <div class="pull-quote">
+    <div class="pull-quote-mark" aria-hidden="true">&ldquo;</div>
+    <blockquote class="reveal">&ldquo;The results exceeded my expectations — my skin has never looked better&rdquo;</blockquote>
+    <div class="pull-quote-attr reveal s2">&mdash; Sophi, Bexleyheath</div>
+  </div>
+
+  <!-- Treatment 2: Brow Lamination — 3-column with detail image -->
+  <div class="t2-block">
+    <div class="t2-image-main">
       <img src="assets/photography/portrait-editorial-1.jpg" alt="Editorial portrait — natural brows and skin">
     </div>
-    <div class="treatment-content">
+    <div class="t2-content">
       <div class="treatment-number" aria-hidden="true">0.02</div>
       <div class="treatment-label reveal-right s1">Brow Sculpting</div>
       <h3 class="treatment-title reveal-right s2">Brow Lamination</h3>
@@ -1054,32 +1202,34 @@
         <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
+    <div class="t2-image-detail">
+      <img src="assets/photography/portrait-skin-1.jpg" alt="Brow lamination detail — sculpted natural brows">
+    </div>
   </div>
 
-  <!-- Treatment 3: Dermaplaning — blush / image right -->
-  <div class="treatment-block t-blush">
-    <div class="treatment-content">
-      <div class="treatment-number" aria-hidden="true">0.03</div>
-      <div class="treatment-label reveal-left s1">Skin Renewal</div>
-      <h3 class="treatment-title reveal-left s2">Dermaplaning Reform</h3>
-      <p class="treatment-desc reveal-left s3">A transformative exfoliation treatment that buffs and tones the skin, leaving an immaculate foundation that appears youthful and flawless. Combined with LED light therapy.</p>
-      <div class="treatment-price reveal-left s4">50 mins &nbsp;|&nbsp; &pound;50</div>
-      <div class="reveal-left s5">
+  <!-- Treatment 3: Dermaplaning — full-bleed image with text overlay -->
+  <div class="t3-block">
+    <div class="t3-bg">
+      <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning treatment — smooth radiant skin">
+    </div>
+    <div class="t3-content">
+      <div class="treatment-label reveal s1">Skin Renewal</div>
+      <h3 class="treatment-title reveal s2">Dermaplaning Reform</h3>
+      <p class="treatment-desc reveal s3">A transformative exfoliation treatment that buffs and tones the skin, leaving an immaculate foundation that appears youthful and flawless. Combined with LED light therapy.</p>
+      <div class="treatment-price reveal s4">50 mins &nbsp;|&nbsp; &pound;50</div>
+      <div class="reveal s5">
         <a href="book.html" class="btn-treatment">Book Now</a>
         <a href="treatments.html" class="treatment-link">Learn more <span class="arrow">&rarr;</span></a>
       </div>
     </div>
-    <div class="treatment-img">
-      <img src="assets/photography/portrait-skin-3.jpg" alt="Dermaplaning treatment — smooth radiant skin">
-    </div>
   </div>
 
-  <!-- Treatment 4: Glass Skin — image left / linen right -->
-  <div class="treatment-block t-linen">
-    <div class="treatment-img">
+  <!-- Treatment 4: Glass Skin — 70/30 wide image, narrow blush content -->
+  <div class="t4-block">
+    <div class="t4-image">
       <img src="assets/photography/portrait-editorial-3.jpg" alt="Glass skin facial — fresh luminous complexion">
     </div>
-    <div class="treatment-content">
+    <div class="t4-content">
       <div class="treatment-number" aria-hidden="true">0.04</div>
       <div class="treatment-label reveal-right s1">Teen Facial</div>
       <h3 class="treatment-title reveal-right s2">Glass Skin</h3>
@@ -1140,6 +1290,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-grid">
@@ -1184,7 +1336,9 @@
       navOverlay.classList.toggle('open', menuOpen);
       floatingLogo.classList.toggle('inverted', menuOpen);
       menuBtn.setAttribute('aria-expanded', menuOpen);
+      menuBtn.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
       document.body.style.overflow = menuOpen ? 'hidden' : '';
+      if (menuOpen) { navOverlay.querySelector('a').focus(); }
     });
 
     // Close menu on link click
@@ -1203,6 +1357,21 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuOpen) {
         menuBtn.click();
+      }
+    });
+
+    // Focus trap for nav overlay
+    navOverlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = navOverlay.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
 

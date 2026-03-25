@@ -29,7 +29,7 @@
       --color-blush: #DBBFB3;
       --color-charcoal: #2C2420;
       --color-terracotta: #B5704F;
-      --color-olive: #B8D964;
+      --color-olive: #C2D98A;
 
       /* Semantic tokens */
       --color-bg: #F5F0E8;
@@ -43,7 +43,7 @@
       --color-ink-3: #8C8078;
       --color-accent: #B5704F;
       --color-accent-hover: #9A5D3F;
-      --color-surface-editorial: #B8D964;
+      --color-surface-editorial: #C2D98A;
 
       /* Semantic states */
       --color-success: #5C8A52;
@@ -102,6 +102,10 @@
     }
     a { color: var(--color-accent); text-decoration: none; transition: color 0.15s; }
     a:hover { color: var(--color-accent-hover); }
+    /* Focus indicators for keyboard navigation */
+    a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    .sidebar-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     ::selection { background: var(--color-blush); color: var(--color-charcoal); }
     img { max-width: 100%; height: auto; display: block; }
     code { font-family: var(--font-mono); font-size: 0.9em; }
@@ -140,7 +144,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--color-ink-3);
+      color: var(--color-ink-2);
       margin-bottom: 12px;
     }
     .sidebar-link {
@@ -192,7 +196,7 @@
     .section-label {
       font-family: var(--font-mono);
       font-size: 12px;
-      color: var(--color-ink-3);
+      color: var(--color-ink-2);
       letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: var(--space-sm);
@@ -270,7 +274,7 @@
   <div class="sidebar-overlay" id="overlay"></div>
 
   <!-- Sidebar navigation -->
-  <nav class="sidebar" id="sidebar">
+  <nav class="sidebar" id="sidebar" aria-label="Design system sections">
     <div class="sidebar-logo">ansikt</div>
     <div class="sidebar-version">Brand Identity v1.0</div>
 
@@ -446,7 +450,7 @@
             <span style="font-size:11px; font-weight:600; color:var(--color-charcoal); letter-spacing:0.05em; text-transform:uppercase;">Olive</span>
           </div>
           <div style="padding:14px; font-size:13px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#B8D964</code></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Hex</span><code>#C2D98A</code></div>
             <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-ink-3);">Token</span><code>--color-olive</code></div>
             <div style="color:var(--color-ink-3); margin-top:6px;">Editorial accent, section backgrounds</div>
           </div>
@@ -476,7 +480,7 @@
         <div><span style="color:var(--color-accent);">--color-accent</span>: #B5704F; <span style="color:var(--color-ink-3);">/* links, buttons, focus */</span></div>
         <div><span style="color:var(--color-accent);">--color-accent-hover</span>: #9A5D3F;</div>
         <div style="color:var(--color-ink-3); margin-top:8px;">/* Editorial */</div>
-        <div><span style="color:var(--color-accent);">--color-surface-editorial</span>: #B8D964; <span style="color:var(--color-ink-3);">/* Olive — bold section backgrounds */</span></div>
+        <div><span style="color:var(--color-accent);">--color-surface-editorial</span>: #C2D98A; <span style="color:var(--color-ink-3);">/* Olive — bold section backgrounds */</span></div>
       </div>
     </section>
 
@@ -518,12 +522,12 @@
         <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:640px;">
           <thead>
             <tr style="background:var(--color-charcoal); color:var(--color-linen);">
-              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Text</th>
-              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Background</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Ratio</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Normal</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Large</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AAA</th>
+              <th scope="col" style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Text</th>
+              <th scope="col" style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Background</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Ratio</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Normal</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AA Large</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">AAA</th>
             </tr>
           </thead>
           <tbody>
@@ -593,7 +597,7 @@
             </tr>
             <tr style="background:var(--color-surface);">
               <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#2C2420; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-1</td>
-              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#B8D964; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>olive</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#C2D98A; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>olive</td>
               <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">9.5:1</td>
               <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
               <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
@@ -601,7 +605,7 @@
             </tr>
             <tr style="background:var(--color-surface-warm);">
               <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#5C524A; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>ink-2</td>
-              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#B8D964; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>olive</td>
+              <td style="padding:10px 16px;"><span style="display:inline-block; width:12px; height:12px; background:#C2D98A; border-radius:2px; vertical-align:middle; margin-right:8px;"></span>olive</td>
               <td style="padding:10px 16px; text-align:center; font-family:var(--font-mono);">4.8:1</td>
               <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
               <td style="padding:10px 16px; text-align:center;"><span style="background:var(--color-success-tint); color:var(--color-success); padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600;">Pass</span></td>
@@ -610,7 +614,7 @@
           </tbody>
         </table>
       </div>
-      <p style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-3); margin-top:12px;">ink-3 is restricted to large text (&ge;24px or &ge;18.67px bold) and decorative/label use only. Olive backgrounds require dark text (Charcoal or ink-2).</p>
+      <p style="font-family:var(--font-mono); font-size:12px; color:var(--color-ink-2); margin-top:12px;">ink-3 is restricted to large text only (18px+ regular or 14px+ bold) — it fails AA for normal text on linen/bg (3.3:1). Use ink-2 for section labels and sidebar group titles. Olive backgrounds require dark text (Charcoal or ink-2).</p>
     </section>
 
     <hr class="divider">
@@ -1103,10 +1107,10 @@
         <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:560px;">
           <thead>
             <tr style="background:var(--color-charcoal); color:var(--color-linen);">
-              <th style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Treatment</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Duration</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Price</th>
-              <th style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Pregnancy Safe</th>
+              <th scope="col" style="padding:12px 16px; text-align:left; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Treatment</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Duration</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Price</th>
+              <th scope="col" style="padding:12px 16px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">Pregnancy Safe</th>
             </tr>
           </thead>
           <tbody>
@@ -1274,7 +1278,7 @@
           <h3 style="font-family:var(--font-body); font-weight:600; font-size:18px; margin-bottom:12px;">Interactive Elements</h3>
           <ul style="font-size:14px; color:var(--color-ink-2); margin:0; padding-left:18px; line-height:2;">
             <li><strong>Touch targets:</strong> minimum 44 &times; 44px on all interactive elements</li>
-            <li><strong>Focus states:</strong> <code>2px solid var(--color-accent)</code> outline with <code>2px</code> offset</li>
+            <li><strong>Focus indicators:</strong> <code>focus-visible: 2px solid var(--color-accent), 2px offset</code> — applied globally to links, buttons, and sidebar links</li>
             <li>Focus must be visible on all interactive elements — never remove <code>outline</code> without an alternative</li>
             <li>Keyboard navigation must reach all interactive elements in logical order</li>
           </ul>
@@ -1286,6 +1290,7 @@
             <li>Never use colour as the sole indicator of state or meaning</li>
             <li>Always pair colour with text, icon, or pattern (e.g. error = red tint + red text + descriptive message)</li>
             <li>The pregnancy-safe column in the treatment table uses colour <em>and</em> text ("Yes"/"No")</li>
+            <li><strong>ink-3</strong> (#8C8078) is restricted to large text only (18px+ regular or 14px+ bold) — it fails AA normal-text contrast on linen/bg at 3.3:1</li>
           </ul>
         </div>
 
